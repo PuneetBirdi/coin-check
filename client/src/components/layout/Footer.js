@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const Footer = () => {
     return (
         <StyledFooter>
-            <p>Created By Me.</p>
+            <FooterText>Created By Me.</FooterText>
         </StyledFooter>
     )
 }
@@ -15,6 +15,13 @@ const StyledFooter = styled.footer`
     display: flex;
     align-content: center;
     justify-content: center;
-    font-size: 0.75rem;
-    background-color: green;
+    margin-top: 1rem;
 `
+
+const FooterText = styled.small`
+  font-size: 0.75rem;
+  display: inline;
+  width: 75%;
+  text-align: center;
+  border-top: 1px solid lightgray;
+`;

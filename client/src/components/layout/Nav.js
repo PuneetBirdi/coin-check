@@ -1,13 +1,26 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Nav = () => {
     return (
         <Navigation>
-            <div className="branding">BRANDING</div>
-            <div className="links">
-                Links
-            </div>
+            <Container>
+                <BrandingContainer>
+                    <p>Coin<AccentText>Check</AccentText></p>
+                </BrandingContainer>
+                <LinksContainer>
+                    <li>
+                        <Link>About</Link>
+                    </li>
+                    <li>
+                        <Link>Home</Link>
+                    </li>
+                    <li>
+                        <Link></Link>
+                    </li>
+                </LinksContainer>
+            </Container>
         </Navigation>
     )
 }
@@ -15,9 +28,37 @@ const Nav = () => {
 export default Nav
 
 const Navigation = styled.nav`
-    padding: 1rem 0;
-    background-color: purple;
+  padding: 1rem 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  margin-bottom: 1.0rem;
+  width: 100%;
+`;
+const Container = styled.div`
+    width: 97%;
+    margin: 0 auto;
     display: flex;
+`
+const BrandingContainer = styled.div`
+    flex: 0;
+`
+const AccentText = styled.span`
+    font-weight:600;
+`
+const LinksContainer = styled.ul`
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    padding: 0;
     margin: 0;
-    width: 100%;
+
+    > li{
+        margin: 0 1.0rem;
+        transition: 0.1s;
+    }
+
+    > li:hover{
+        font-weight: bold;
+    }
 `
