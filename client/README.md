@@ -1,0 +1,1 @@
+This is the front-end client side application for CoinCheck.
