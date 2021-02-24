@@ -6,8 +6,9 @@ const GeneralInfo = () => {
       <GeneralInfoStyled>
         <MainHeader>
           <DetailContainer>
+            <small>BTC - USD</small>
             <Price>$45345.23</Price>
-            <PriceCaption>BTC - USD</PriceCaption>
+            <small className='timestamp'>BTC - USD</small>
           </DetailContainer>
           <TableContainer>
             <Table>
@@ -48,10 +49,6 @@ const GeneralInfo = () => {
 export default GeneralInfo
 
 const GeneralInfoStyled = styled.section`
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-  border-radius: 0.25rem;
-  background-color: white;
   grid-row-start: 1;
   grid-row-end: 3;
   grid-column-start: 1;
@@ -70,6 +67,20 @@ const MainHeader = styled.section`
 `
 const DetailContainer = styled.div`
     width: auto;
+
+    > small{
+        padding: 0;
+        margin: 0;
+        font-size: 0.75rem;
+        display: block;
+        width: 100%;
+        text-align: right;
+        color: gray;
+    }
+
+    > .timestamp{
+        font-size: 0.5rem;
+    }
 `
 const TableContainer = styled.div`
     width: auto;
@@ -81,26 +92,14 @@ const Price = styled.h1`
     font-size: 2.0rem;
     font-weight: 900;
 `
-const PriceCaption = styled.small`
-    padding: 0;
-    margin: 0;
-    font-size: 0.75rem;
-    display: block;
-    width: 100%;
-    text-align: right;
-    color: gray;
-`
-
 const ChartContainer = styled.section`
     background-color: purple;
     flex: 1;
 `
-
 const Table = styled.table`
     font-size: 0.75rem;
     margin-left: 2.0rem;
 `
-
 const Metric = styled.td`
     padding-right: 2.5rem;
 `

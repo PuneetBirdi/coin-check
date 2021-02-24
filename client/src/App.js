@@ -40,8 +40,15 @@ const Main = styled.main`
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-gap: 1.0rem;
-`
+  grid-gap: 1rem;
+
+  > section {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    background-color: white;
+  }
+`;
 const Test = styled.div`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   padding: 1rem;
