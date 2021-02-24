@@ -1,0 +1,11 @@
+{
+  "name": "coin-check",
+  "version": "1.0.0",
+  "description": "A simple React dashboard style application to display crypto currency information using the Coinbase API.",
+  "main": "/server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
