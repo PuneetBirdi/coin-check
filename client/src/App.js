@@ -6,6 +6,7 @@ import Nav from './components/layout/Nav';
 import Footer from './components/layout/Footer';
 import GeneralInfo from './components/GeneralInfo';
 import OrderBook from './components/OrderBook';
+import News from './components/News';
 //Styling
 import styled from 'styled-components'
 
@@ -17,7 +18,7 @@ const App = () => {
       <Main>
         <GeneralInfo/>
         <OrderBook/>
-        <Test/>
+        <News/>
       </Main>
       <Footer/>
     </Div>
@@ -39,7 +40,8 @@ const Main = styled.main`
   width: 97%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   grid-gap: 1rem;
 
   > section {

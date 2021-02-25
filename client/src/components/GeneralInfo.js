@@ -1,15 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import LineChart from './LineChart'
+
 const GeneralInfo = () => {
     return (
       <GeneralInfoStyled>
         <MainHeader>
-          <DetailContainer>
+          <PriceContainer>
             <small>BTC - USD</small>
             <Price>$45345.23</Price>
-            <small className='timestamp'>BTC - USD</small>
-          </DetailContainer>
+            <small className='timestamp'>timestamp</small>
+          </PriceContainer>
           <TableContainer>
             <Table>
               <tr>
@@ -41,7 +43,9 @@ const GeneralInfo = () => {
             </Table>
           </TableContainer>
         </MainHeader>
-        <ChartContainer></ChartContainer>
+        <ChartContainer>
+          <LineChart/>
+        </ChartContainer>
       </GeneralInfoStyled>
     );
 }
@@ -65,7 +69,7 @@ const MainHeader = styled.section`
     justify-content: space-between;
     margin-bottom: 0.5rem;
 `
-const DetailContainer = styled.div`
+const PriceContainer = styled.div`
     width: auto;
 
     > small{
@@ -93,8 +97,12 @@ const Price = styled.h1`
     font-weight: 900;
 `
 const ChartContainer = styled.section`
-    background-color: purple;
     flex: 1;
+
+    >div{
+      width: 100%;
+      height: 100%;
+    }
 `
 const Table = styled.table`
     font-size: 0.75rem;
