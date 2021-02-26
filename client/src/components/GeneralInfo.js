@@ -9,7 +9,7 @@ const GeneralInfo = () => {
         <MainHeader>
           <PriceContainer>
             <small>BTC - USD</small>
-            <Price>$45345.23</Price>
+            <Price>$45,345.23</Price>
             <small className='timestamp'>timestamp</small>
           </PriceContainer>
           <TableContainer>
