@@ -35,21 +35,20 @@ useEffect(() => {
 
   //Set chart to candlestick type.
   const candlestickSeries = chart.addCandlestickSeries({
-    upColor: "#6495ED",
-    downColor: "#FF6347",
+    upColor: "rgba(65, 189, 65, 0.5)",
+    downColor: "rgba(255, 82, 82, 0.56)",
     borderVisible: false,
     wickVisible: true,
     borderColor: "#000000",
     wickColor: "#000000",
-    borderUpColor: "#4682B4",
-    borderDownColor: "#A52A2A",
-    wickUpColor: "#4682B4",
-    wickDownColor: "#A52A2A",
+    borderUpColor: "rgba(65, 189, 65, 1)",
+    borderDownColor: "rgba(255, 82, 82, 0.56)",
+    wickUpColor: "rgba(65, 189, 65, 1)",
+    wickDownColor: "rgba(255, 82, 82, 0.56)",
   });
 
   //Initialize volume bar histogram
   const volumeSeries = chart.addHistogramSeries({
-    color: "#26a69a",
     priceFormat: {
       type: "volume",
     },

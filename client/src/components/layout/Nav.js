@@ -14,9 +14,6 @@ const Nav = () => {
                         <Link>About</Link>
                     </li>
                     <li>
-                        <Link>Home</Link>
-                    </li>
-                    <li>
                         <Link></Link>
                     </li>
                 </LinksContainer>
@@ -38,6 +35,7 @@ const Container = styled.div`
     width: 97%;
     margin: 0 auto;
     display: flex;
+    align-items: center;
 `
 const BrandingContainer = styled.div`
     flex: 0;
@@ -56,6 +54,7 @@ const LinksContainer = styled.ul`
     > li{
         margin: 0 1.0rem;
         transition: 0.1s;
+        font-size: 0.75rem;
     }
 
     > li:hover{
