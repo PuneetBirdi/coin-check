@@ -46,7 +46,7 @@ const Main = styled.main`
 
   > section {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 0.25rem;
     background-color: white;
   }

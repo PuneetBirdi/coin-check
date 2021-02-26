@@ -15,21 +15,21 @@ const GeneralInfo = () => {
           <TableContainer>
             <Table>
               <tr>
-                <Metric>Volume</Metric>
+                <Metric>Open</Metric>
                 <Value>325234.00</Value>
               </tr>
               <tr>
-                <Metric>Volume</Metric>
+                <Metric>High</Metric>
                 <Value>325234.00</Value>
               </tr>
               <tr>
-                <Metric>Volume</Metric>
+                <Metric>Low</Metric>
                 <Value>325234.00</Value>
               </tr>
             </Table>
             <Table>
               <tr>
-                <Metric>Volume</Metric>
+                <Metric>Last</Metric>
                 <Value>325234.00</Value>
               </tr>
               <tr>
@@ -37,7 +37,7 @@ const GeneralInfo = () => {
                 <Value>325234.00</Value>
               </tr>
               <tr>
-                <Metric>Volume</Metric>
+                <Metric>30 Day Volume</Metric>
                 <Value>325234.00</Value>
               </tr>
             </Table>
