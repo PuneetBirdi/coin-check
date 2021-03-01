@@ -1,6 +1,5 @@
-import React from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
-
 
 //Custom build components
 import Nav from './components/layout/Nav';
@@ -12,15 +11,46 @@ import News from './components/News';
 import styled from 'styled-components'
 
 const App = () => {
+  const [tickerData, setTickerData] = useState("");
+  const [connectionStatus, setConnectionStatus] = useState(false)
+
+  useEffect(() => {
+        const subscribe = {
+          type: "subscribe",
+          channels: [{ name: "ticker", product_ids: ["BTC-USD"] }],
+        };
+        const ws = new WebSocket(
+          "wss://ws-feed-public.sandbox.pro.coinbase.com"
+        );
+
+        ws.onopen = () => {
+          ws.send(JSON.stringify(subscribe));
+        };
+
+        ws.onmessage = (e) => {
+          setConnectionStatus(true)
+          setTickerData(JSON.parse(e.data));
+        };
+
+        ws.onerror = (e) =>{
+          setConnectionStatus(false)
+        }
+  }, [])
+
   return (
     <Router>
     <Div className="App">
       <Nav/>
+      {
+        connectionStatus ? 
       <Main>
-        <GeneralInfo/>
+        <GeneralInfo tickerData={tickerData}/>
         <OrderBook/>
         <News/>
       </Main>
+      :
+      <h2>No connection.</h2>
+      }
       <Footer/>
     </Div>
     </Router>

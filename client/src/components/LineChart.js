@@ -3,7 +3,7 @@ import { createChart } from "lightweight-charts";
 import styled from 'styled-components';
 
 const LineChart = props => {
-const ref = React.useRef();
+const ref = useRef();
 const legendRef = useRef();
 
 //Generate the chart on render.
