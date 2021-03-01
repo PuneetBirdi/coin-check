@@ -1,12 +1,10 @@
 import React, {useEffect, useRef} from 'react'
 import { createChart } from "lightweight-charts";
 import styled from 'styled-components';
-import PropTypes from 'prop-types'
 
 const LineChart = props => {
 const ref = React.useRef();
 const legendRef = useRef();
-
 
 //Generate the chart on render.
 useEffect(() => {
@@ -35,13 +33,13 @@ useEffect(() => {
 
   //Set chart to candlestick type.
   const candlestickSeries = chart.addCandlestickSeries({
-    upColor: "rgba(65, 189, 65, 0.5)",
-    downColor: "rgba(255, 82, 82, 0.56)",
+    upColor: "rgba(47,173,53,0.8)",
+    downColor: "rgba(148,65,42,1)",
     borderVisible: false,
     wickVisible: true,
     borderColor: "#000000",
     wickColor: "#000000",
-    borderUpColor: "rgba(65, 189, 65, 1)",
+    borderUpColor: "rgba(47,173,53,255)",
     borderDownColor: "rgba(255, 82, 82, 0.56)",
     wickUpColor: "rgba(65, 189, 65, 1)",
     wickDownColor: "rgba(255, 82, 82, 0.56)",
@@ -59,7 +57,7 @@ useEffect(() => {
     },
   });
 
-  // set data
+  // set sample data
   candlestickSeries.setData([
     { time: "2018-10-19", open: 54.62, high: 55.5, low: 54.52, close: 54.9 },
     { time: "2018-10-22", open: 55.08, high: 55.27, low: 54.61, close: 54.98 },
@@ -365,12 +363,12 @@ useEffect(() => {
     { time: "2019-05-28", value: 3097125.0, color: "rgba(0, 150, 136, 0.8)" },
   ]);
 
+  //Handling the legend to update whenever the crosshair has changes
   chart.subscribeCrosshairMove((param) => {
     let volume = null
     let prices = {}
     //Check if there is a timestamp, at the crosshair position, load the values at this position into the appropriate variable.
     if (param.time) {
-      const time = param.time;
       //Candlesticks return a Map for prices, so iterate through the map and push them into the prices object initialized above.
       const iterator = param.seriesPrices.values()
       prices = iterator.next().value
@@ -381,6 +379,7 @@ useEffect(() => {
       legendRef.current.textContent = 'BTC - USD'
     }
   });
+
 }, []);
 
 return (
@@ -394,9 +393,6 @@ return (
 );
 }
 
-LineChart.propTypes = {
-
-}
 
 export default LineChart
 

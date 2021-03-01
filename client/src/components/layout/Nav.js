@@ -11,10 +11,7 @@ const Nav = () => {
                 </BrandingContainer>
                 <LinksContainer>
                     <li>
-                        <Link>About</Link>
-                    </li>
-                    <li>
-                        <Link></Link>
+                        <Link to='/'>About</Link>
                     </li>
                 </LinksContainer>
             </Container>

@@ -1,45 +1,52 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import styled from 'styled-components'
 
 import LineChart from './LineChart'
 
 const GeneralInfo = () => {
+  //Set all references for values that will update based on socket responses
+  const priceRef = useRef();
+  const timestampRef = useRef();
     return (
       <GeneralInfoStyled>
         <MainHeader>
           <PriceContainer>
             <small>BTC - USD</small>
-            <Price>$45,345.23</Price>
-            <small className='timestamp'>timestamp</small>
+            <h2 ref={priceRef}>$45,345.23</h2>
+            <small className='timestamp' ref={timestampRef}>timestamp</small>
           </PriceContainer>
           <TableContainer>
             <Table>
-              <tr>
-                <Metric>Open</Metric>
-                <Value>325234.00</Value>
-              </tr>
-              <tr>
-                <Metric>High</Metric>
-                <Value>325234.00</Value>
-              </tr>
-              <tr>
-                <Metric>Low</Metric>
-                <Value>325234.00</Value>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Open</td>
+                  <td>325234.00</td>
+                </tr>
+                <tr>
+                  <td>High</td>
+                  <td>325234.00</td>
+                </tr>
+                <tr>
+                  <td>Low</td>
+                  <td>325234.00</td>
+                </tr>
+              </tbody>
             </Table>
             <Table>
+              <tbody>
               <tr>
-                <Metric>Last</Metric>
-                <Value>325234.00</Value>
+                <td>Last</td>
+                <td>325234.00</td>
               </tr>
               <tr>
-                <Metric>Volume</Metric>
-                <Value>325234.00</Value>
+                <td>Volume</td>
+                <td>325234.00</td>
               </tr>
               <tr>
-                <Metric>30 Day Volume</Metric>
-                <Value>325234.00</Value>
+                <td>30 Day Volume</td>
+                <td>325234.00</td>
               </tr>
+              </tbody>
             </Table>
           </TableContainer>
         </MainHeader>
@@ -70,31 +77,32 @@ const MainHeader = styled.section`
     margin-bottom: 0.5rem;
 `
 const PriceContainer = styled.div`
-    width: auto;
+  width: auto;
 
-    > small{
-        padding: 0;
-        margin: 0;
-        font-size: 0.75rem;
-        display: block;
-        width: 100%;
-        text-align: right;
-        color: gray;
-    }
+  > small {
+    padding: 0;
+    margin: 0;
+    font-size: 0.75rem;
+    display: block;
+    width: 100%;
+    text-align: right;
+    color: gray;
+  }
 
-    > .timestamp{
-        font-size: 0.5rem;
-    }
-`
+  > h2 {
+    padding: 0;
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 900;
+  }
+
+  > .timestamp {
+    font-size: 0.5rem;
+  }
+`;
 const TableContainer = styled.div`
     width: auto;
     display: flex;
-`
-const Price = styled.h1`
-    padding: 0;
-    margin: 0;
-    font-size: 2.0rem;
-    font-weight: 900;
 `
 const ChartContainer = styled.section`
     flex: 1;
@@ -107,9 +115,4 @@ const ChartContainer = styled.section`
 const Table = styled.table`
     font-size: 0.75rem;
     margin-left: 2.0rem;
-`
-const Metric = styled.td`
-    padding-right: 2.5rem;
-`
-const Value = styled.td`
 `

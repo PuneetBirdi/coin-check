@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
 
+
 //Custom build components
 import Nav from './components/layout/Nav';
 import Footer from './components/layout/Footer';
@@ -50,9 +51,4 @@ const Main = styled.main`
     border-radius: 0.25rem;
     background-color: white;
   }
-`;
-const Test = styled.div`
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-  border-radius: 0.25rem;
 `;
