@@ -1,15 +1,16 @@
 import React, {useRef, useEffect} from 'react'
 import styled from 'styled-components'
+import { roundDecimals, formatMoney} from '../utils/formatData';
 
 import LineChart from './LineChart'
 
-const GeneralInfo = ({tickerData: {high_24h, low_24h, open_24h, price, volume_24h, volume_30d, time}}) => {
+const GeneralInfo = ({chartData, tickerData: {high_24h, low_24h, open_24h, price, volume_24h, volume_30d, time}}) => {
     return (
       <GeneralInfoStyled>
         <MainHeader>
           <PriceContainer>
             <small>BTC - USD</small>
-            <h2>${price}</h2>
+            <h2>{formatMoney(price)}</h2>
             <small className="timestamp">
               {time}
             </small>
@@ -19,15 +20,15 @@ const GeneralInfo = ({tickerData: {high_24h, low_24h, open_24h, price, volume_24
               <tbody>
                 <tr>
                   <td>Open</td>
-                  <td>{open_24h}</td>
+                  <td>{formatMoney(open_24h)}</td>
                 </tr>
                 <tr>
                   <td>High</td>
-                  <td>{high_24h}</td>
+                  <td>{formatMoney(high_24h)}</td>
                 </tr>
                 <tr>
                   <td>Low</td>
-                  <td>{low_24h}</td>
+                  <td>{formatMoney(low_24h)}</td>
                 </tr>
               </tbody>
             </Table>
@@ -39,18 +40,23 @@ const GeneralInfo = ({tickerData: {high_24h, low_24h, open_24h, price, volume_24
                 </tr>
                 <tr>
                   <td>Volume</td>
-                  <td>{volume_24h}</td>
+                  <td>{roundDecimals(volume_24h, 4)}</td>
                 </tr>
                 <tr>
                   <td>30 Day Volume</td>
-                  <td>{volume_30d}</td>
+                  <td>{roundDecimals(volume_30d, 4)}</td>
                 </tr>
               </tbody>
             </Table>
           </TableContainer>
         </MainHeader>
         <ChartContainer>
-          <LineChart />
+          {
+            chartData ?
+            <LineChart chartData={chartData}/>
+            :
+            <h2>LOADING</h2>
+          }
         </ChartContainer>
       </GeneralInfoStyled>
     );

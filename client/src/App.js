@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
+import { formatChartData } from './utils/formatData'
+import axios from 'axios';
 
 //Custom build components
 import Nav from './components/layout/Nav';
@@ -12,9 +14,22 @@ import styled from 'styled-components'
 
 const App = () => {
   const [tickerData, setTickerData] = useState("");
+  const [historicalData, setHistoricalData] = useState("")
   const [connectionStatus, setConnectionStatus] = useState(false)
+  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  useEffect(async () => {
+        try {
+          const res = await axios.get(
+            "https://api.pro.coinbase.com/products/BTC-USD/candles?granularity=300"
+          );
+
+          const formattedData = await formatChartData(res.data)
+          setHistoricalData(formattedData)
+          setLoading(false)
+        } catch (error) {
+          console.log(error)
+        }
         const subscribe = {
           type: "subscribe",
           channels: [{ name: "ticker", product_ids: ["BTC-USD"] }],
@@ -42,9 +57,9 @@ const App = () => {
     <Div className="App">
       <Nav/>
       {
-        connectionStatus ? 
+        connectionStatus && !loading ? 
       <Main>
-        <GeneralInfo tickerData={tickerData}/>
+        <GeneralInfo tickerData={tickerData} chartData={historicalData}/>
         <OrderBook/>
         <News/>
       </Main>
