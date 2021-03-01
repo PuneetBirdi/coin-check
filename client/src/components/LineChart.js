@@ -33,16 +33,14 @@ useEffect(() => {
 
   //Set chart to candlestick type.
   const candlestickSeries = chart.addCandlestickSeries({
-    upColor: "rgba(47,173,53,0.8)",
-    downColor: "rgba(148,65,42,1)",
-    borderVisible: false,
+    upColor: "rgba(63, 191, 63, 0.5)",
+    downColor: "rgba(255, 20, 20, 0.5)",
+    borderVisible: true,
     wickVisible: true,
-    borderColor: "#000000",
-    wickColor: "#000000",
-    borderUpColor: "rgba(47,173,53,255)",
-    borderDownColor: "rgba(255, 82, 82, 0.56)",
-    wickUpColor: "rgba(65, 189, 65, 1)",
-    wickDownColor: "rgba(255, 82, 82, 0.56)",
+    borderUpColor: "rgba(63, 191, 63, 1)",
+    borderDownColor: "rgba(255, 20, 20, 1)",
+    wickUpColor: "gba(63, 191, 63, 1)",
+    wickDownColor: "rgba(255, 20, 20, 1)",
   });
 
   //Initialize volume bar histogram
