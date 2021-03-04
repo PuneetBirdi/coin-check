@@ -1,57 +1,62 @@
-import React, {useRef} from 'react'
+import React, {useRef, useEffect} from 'react'
 import styled from 'styled-components'
+import { roundDecimals, formatMoney} from '../utils/formatData';
 
 import LineChart from './LineChart'
 
-const GeneralInfo = () => {
-  //Set all references for values that will update based on socket responses
-  const priceRef = useRef();
-  const timestampRef = useRef();
+const GeneralInfo = ({chartData, tickerData: {high_24h, low_24h, open_24h, price, volume_24h, volume_30d, time}}) => {
     return (
       <GeneralInfoStyled>
         <MainHeader>
           <PriceContainer>
             <small>BTC - USD</small>
-            <h2 ref={priceRef}>$45,345.23</h2>
-            <small className='timestamp' ref={timestampRef}>timestamp</small>
+            <h2>{formatMoney(price)}</h2>
+            <small className="timestamp">
+              {time}
+            </small>
           </PriceContainer>
           <TableContainer>
             <Table>
               <tbody>
                 <tr>
                   <td>Open</td>
-                  <td>325234.00</td>
+                  <td>{formatMoney(open_24h)}</td>
                 </tr>
                 <tr>
                   <td>High</td>
-                  <td>325234.00</td>
+                  <td>{formatMoney(high_24h)}</td>
                 </tr>
                 <tr>
                   <td>Low</td>
-                  <td>325234.00</td>
+                  <td>{formatMoney(low_24h)}</td>
                 </tr>
               </tbody>
             </Table>
             <Table>
               <tbody>
-              <tr>
-                <td>Last</td>
-                <td>325234.00</td>
-              </tr>
-              <tr>
-                <td>Volume</td>
-                <td>325234.00</td>
-              </tr>
-              <tr>
-                <td>30 Day Volume</td>
-                <td>325234.00</td>
-              </tr>
+                <tr>
+                  <td>Last</td>
+                  <td>325234.00</td>
+                </tr>
+                <tr>
+                  <td>Volume</td>
+                  <td>{roundDecimals(volume_24h, 4)}</td>
+                </tr>
+                <tr>
+                  <td>30 Day Volume</td>
+                  <td>{roundDecimals(volume_30d, 4)}</td>
+                </tr>
               </tbody>
             </Table>
           </TableContainer>
         </MainHeader>
         <ChartContainer>
-          <LineChart/>
+          {
+            chartData ?
+            <LineChart chartData={chartData}/>
+            :
+            <h2>LOADING</h2>
+          }
         </ChartContainer>
       </GeneralInfoStyled>
     );

@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "coinbase-pro-node": "^2.18.1",
     "express": "^4.17.1",
-    "socket.io": "^3.1.1"
+    "socket.io": "^3.1.1",
+    "ws": "^7.4.3"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
