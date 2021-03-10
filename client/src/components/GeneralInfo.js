@@ -9,7 +9,7 @@ const GeneralInfo = ({tickerData: {high_24h, low_24h, open_24h, price, volume_24
 
   //Getting data from context and destructure it.
   const dataContext = useContext(DataContext)
-  const {historicalData, loading, getHistorical} = dataContext;
+  const {historicalData, loading, error, getHistorical} = dataContext;
 
   //Call for updated historical data when the component is rendered
   useEffect(() => {
@@ -63,7 +63,7 @@ const GeneralInfo = ({tickerData: {high_24h, low_24h, open_24h, price, volume_24
         </MainHeader>
         <ChartContainer>
           {
-            !loading ?
+            !loading && !error ?
             <LineChart chartData={historicalData}/>
             :
             <h2>LOADING</h2>

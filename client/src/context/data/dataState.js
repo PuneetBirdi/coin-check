@@ -59,7 +59,7 @@ const DataState = (props) =>{
         } catch (error) {
             dispatch({
                 type: DATA_ERROR,
-                payload: error
+                payload: error.response.data.message
             })
         }
     }
