@@ -10,7 +10,7 @@ import {
     SET_CONNECTION_STATUS,
     DATA_ERROR
 } from '../types';
-import {formatData} from '../../utils/formatData';
+import {formatChartData} from '../../utils/formatData';
 
 //CONSTANTS
 const SUBSCRIBE = {
@@ -29,11 +29,11 @@ const COINBASE_REST_API = "https://api.pro.coinbase.com"
 const DataState = (props) =>{
     const initialState = {
         product: 'BTC-USD',
-        tickerData = "",
-        historicalData= "",
-        level2Data= "",
-        isConnected = false,
-        isLoading = true
+        tickerData: "",
+        historicalData: "",
+        level2Data: "",
+        isConnected: false,
+        loading: true
     }
 
     const [state, dispatch] = useReducer(DataReducer, initialState)
@@ -41,7 +41,7 @@ const DataState = (props) =>{
 
     //Initial REST-API call for historical data
     const getHistorical = async (product) =>{
-        setLoading(true);
+        setLoading();
         //Make API request based on parameters that were passed in.
         try {
             const res = await axios.get(
@@ -70,6 +70,18 @@ const DataState = (props) =>{
         dispatch({ type: SET_LOADING });
     };
 
+    return (
+    <DataContext.Provider
+      value={{
+        historicalData: state.historicalData,
+        error: state.error,
+        loading: state.loading,
+        getHistorical
+      }}
+    >
+      {props.children}
+    </DataContext.Provider>
+  );
 }
 
 
