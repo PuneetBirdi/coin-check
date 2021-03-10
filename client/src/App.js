@@ -12,6 +12,9 @@ import News from './components/News';
 //Styling
 import styled from 'styled-components'
 
+//Context
+import DataState from './context/data/dataState'
+
 const App = () => {
   const [tickerData, setTickerData] = useState("");
   const [level2Data, setLevel2Data] = useState("");
@@ -75,20 +78,22 @@ const App = () => {
 
   return (
     <Router>
-    <Div className="App">
-      <Nav/>
-      {
-        connectionStatus && !loading ? 
-      <Main>
-        <GeneralInfo tickerData={tickerData} chartData={historicalData}/>
-        <OrderBook/>
-        <News/>
-      </Main>
-      :
-      <h2>No connection.</h2>
-      }
-      <Footer/>
-    </Div>
+      <Div className="App">
+        <Nav/>
+        {
+          connectionStatus && !loading ? 
+        <Main>
+          <DataState>
+            <GeneralInfo tickerData={tickerData} chartData={historicalData}/>
+          </DataState>
+          <OrderBook/>
+          <News/>
+        </Main>
+        :
+        <h2>No connection.</h2>
+        }
+        <Footer/>
+      </Div>
     </Router>
   );
 }

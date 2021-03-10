@@ -1,10 +1,21 @@
-import React, {useRef, useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import { roundDecimals, formatMoney} from '../utils/formatData';
+import DataContext from '../context/data/dataContext';
 
 import LineChart from './LineChart'
 
-const GeneralInfo = ({chartData, tickerData: {high_24h, low_24h, open_24h, price, volume_24h, volume_30d, time}}) => {
+const GeneralInfo = ({tickerData: {high_24h, low_24h, open_24h, price, volume_24h, volume_30d, time}}) => {
+
+  //Getting data from context and destructure it.
+  const dataContext = useContext(DataContext)
+  const {historicalData, loading, error, getHistorical} = dataContext;
+
+  //Call for updated historical data when the component is rendered
+  useEffect(() => {
+    getHistorical()
+  }, [])
+
     return (
       <GeneralInfoStyled>
         <MainHeader>
@@ -52,8 +63,8 @@ const GeneralInfo = ({chartData, tickerData: {high_24h, low_24h, open_24h, price
         </MainHeader>
         <ChartContainer>
           {
-            chartData ?
-            <LineChart chartData={chartData}/>
+            !loading && !error ?
+            <LineChart chartData={historicalData}/>
             :
             <h2>LOADING</h2>
           }
