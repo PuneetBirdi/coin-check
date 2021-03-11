@@ -3,12 +3,11 @@
  import LiveDataContext from './liveDataContext';
  import LiveDataReducer from './liveDataReducer';
  import {
-   CONNECT_TO_SOCKET,
+
    HANDLE_TICKER_DATA,
-   GET_HISTORICAL_DATA,
-   SET_LOADING,
    SET_CONNECTION_STATUS,
-   DATA_ERROR,
+   HANDLE_LEVEL2_UPDATE,
+   HANDLE_LEVEL2_SNAPSHOT,
  } from "../types";
 
  //CONSTANTS
@@ -24,8 +23,9 @@ const WEBSOCKET_ADDRESS = "wss://ws-feed-public.sandbox.pro.coinbase.com";
 const LiveDataState = (props) =>{
   const initialState = {
     product: "BTC-USD",
-    tickerData: "",
-    level2Data: "",
+    tickerData: {},
+    level2Snapshot: {},
+    level2Update: {},
     isConnected: false,
     error: null,
   };
@@ -52,9 +52,15 @@ const LiveDataState = (props) =>{
               payload: response
             })
         }else if(response.type === 'snapshot'){
-            //create initial order-book based on snapshot
+            dispatch({
+              type: HANDLE_LEVEL2_SNAPSHOT,
+              payload: response
+            })
         }else if(response.type === 'l2update'){
-            //update the order book
+            dispatch({
+              type: HANDLE_LEVEL2_UPDATE,
+              payload: response
+            })
         }
     };
 
@@ -75,7 +81,8 @@ const LiveDataState = (props) =>{
             tickerData: state.tickerData,
             socketError: state.error,
             isConnected: state.isConnected,
-            level2Data: state.level2Data,
+            level2Snapshot: state.level2Snapshot,
+            level2Update: state.level2Update,
             connectToSocket,
             }}
         >

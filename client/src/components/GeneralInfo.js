@@ -26,6 +26,10 @@ const GeneralInfo = () => {
 
     return (
       <GeneralInfoStyled>
+        {
+          !tickerData.price ?
+            <h2>CONNECTING</h2>
+          :
         <MainHeader>
           <PriceContainer>
             <small>BTC - USD</small>
@@ -69,6 +73,8 @@ const GeneralInfo = () => {
             </Table>
           </TableContainer>
         </MainHeader>
+
+        }
         <ChartContainer>
           {
             !loading && !error ?
@@ -88,7 +94,6 @@ const GeneralInfoStyled = styled.section`
   grid-row-end: 3;
   grid-column-start: 1;
   grid-column-end: 3;
-  padding: 1rem;
 
   display: flex;
   flex-direction: column;
