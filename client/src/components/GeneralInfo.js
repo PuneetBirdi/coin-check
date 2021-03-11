@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react'
 import styled from 'styled-components'
-import { roundDecimals, formatMoney} from '../utils/formatData';
+import {roundDecimals, formatMoney} from '../utils/formatData';
 import DataContext from '../context/data/dataContext';
 import LiveDataContext from '../context/liveData/liveDataContext';
 
@@ -12,7 +12,7 @@ const GeneralInfo = () => {
   const dataContext = useContext(DataContext)
   const liveDataContext = useContext(LiveDataContext)
   //Destructure data and functions from context
-  const {historicalData, loading, error, getHistorical} = dataContext;
+  const {loading, error, getHistorical} = dataContext;
   const {tickerData, isConnected, socketError, connectToSocket} = liveDataContext;
 
   //Destructure ticker data
@@ -78,7 +78,7 @@ const GeneralInfo = () => {
         <ChartContainer>
           {
             !loading && !error ?
-            <LineChart chartData={historicalData}/>
+            <LineChart/>
             :
             <h2>LOADING</h2>
           }
