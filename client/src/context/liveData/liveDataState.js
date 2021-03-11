@@ -4,13 +4,12 @@
  import LiveDataReducer from './liveDataReducer';
  import {
    CONNECT_TO_SOCKET,
-   HANDLE_FEED,
+   HANDLE_TICKER_DATA,
    GET_HISTORICAL_DATA,
    SET_LOADING,
    SET_CONNECTION_STATUS,
    DATA_ERROR,
  } from "../types";
-import e from 'express';
 
  //CONSTANTS
 const SUBSCRIBE_MESSAGE = {
@@ -22,7 +21,7 @@ const SUBSCRIBE_MESSAGE = {
 };
 const WEBSOCKET_ADDRESS = "wss://ws-feed-public.sandbox.pro.coinbase.com";
 
-const liveDataState = (props) =>{
+const LiveDataState = (props) =>{
   const initialState = {
     product: "BTC-USD",
     tickerData: "",
@@ -31,10 +30,10 @@ const liveDataState = (props) =>{
     error: null,
   };
 
-  const [state, dispatch] = useReducer(liveDataReducer, initialState);
+  const [state, dispatch] = useReducer(LiveDataReducer, initialState);
 
   //Connect and handle messages from the socket
-  const connectToSocket = (async = () => {
+  const connectToSocket = async () => {
     //Initiate socket
     const ws = new WebSocket(WEBSOCKET_ADDRESS);
 
@@ -48,7 +47,10 @@ const liveDataState = (props) =>{
         const response = (JSON.parse(message.data))
 
         if(response.type === 'ticker'){
-            //set the ticker data to the response
+            dispatch({
+              type: HANDLE_TICKER_DATA,
+              payload: response
+            })
         }else if(response.type === 'snapshot'){
             //create initial order-book based on snapshot
         }else if(response.type === 'l2update'){
@@ -57,13 +59,29 @@ const liveDataState = (props) =>{
     };
 
     //If the socket send an error, set the connection to false and pass in error to state.
-    ws.onerror = (e) =>{
-        setConnectionStatus();
+    ws.onerror = (error) =>{
+        setConnectionStatus()
     }
-  });
+  }
 
   //Set Loading
   const setConnectionStatus = () => {
     dispatch({ type: SET_CONNECTION_STATUS });
   };
+
+    return (
+        <LiveDataContext.Provider
+            value={{
+            tickerData: state.tickerData,
+            socketError: state.error,
+            isConnected: state.isConnected,
+            level2Data: state.level2Data,
+            connectToSocket,
+            }}
+        >
+            {props.children}
+        </LiveDataContext.Provider>
+    );
 }
+
+export default LiveDataState;
