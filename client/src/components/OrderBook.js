@@ -1,19 +1,32 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
+import DataContext from "../context/data/dataContext";
+import LiveDataContext from "../context/liveData/liveDataContext";
 
 const OrderBook = () => {
-    return (
-        <OrderBookStyled>
-            <Heading>OrderBook</Heading>
-        </OrderBookStyled>
-    )
+  //Getting data from context and destructure it.
+  const liveDataContext = useContext(LiveDataContext);
+  //Destructure data and functions from context
+  const {
+    tickerData,
+    isConnected,
+    socketError,
+    connectToSocket,
+    level2Snapshot,
+    level2Update
+  } = liveDataContext;
+  return (
+    <OrderBookStyled>
+      <Heading>OrderBook</Heading>
+    </OrderBookStyled>
+  );
 }
 
 export default OrderBook
 
 const OrderBookStyled = styled.section`
   grid-row-start: 1;
-  grid-row-end: 3;
+  grid-row-end: 4;
 `;
 
 const Heading = styled.h2`
