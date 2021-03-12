@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
-import { formatChartData } from './utils/formatData'
-import axios from 'axios';
 
 //Custom build components
 import Nav from './components/layout/Nav';

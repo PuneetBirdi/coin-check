@@ -35,3 +35,28 @@ export const formatChartData = (array) =>{
 
     return response;
 }
+
+export const formatMarketDepth = (snapshot, update) =>{
+    //Cut the response down to just the first 100 asks and bids. The response is already in order of price.
+    const asks = snapshot.asks.slice(0, 100)
+    const bids = snapshot.bids.slice(0, 100)
+    
+
+    //Initialize array for final orderbook to be pushed into.
+    const orderBook = []
+
+    //Loop through the array and create elements to show the total quantity, by accumulating all of the quantities of prices
+    let accumulator = 0
+    for (let i = 0; i < asks.length; i++) {
+        const current = asks[i];
+        accumulator += parseFloat(current[1])
+
+        const bookItem = {
+            price: parseFloat(current[0]),
+            quantity: parseFloat(current[1]),
+            totalQuantity: accumulator
+        }
+        orderBook.push(bookItem)
+    }
+    console.log(orderBook, bids)
+}

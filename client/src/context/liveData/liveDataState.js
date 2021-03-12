@@ -1,5 +1,5 @@
  import { useReducer } from 'react';
- import axios from 'axios';
+ import { formatMarketDepth } from '../../utils/formatData';
  import LiveDataContext from './liveDataContext';
  import LiveDataReducer from './liveDataReducer';
  import {
@@ -52,6 +52,7 @@ const LiveDataState = (props) =>{
               payload: response
             })
         }else if(response.type === 'snapshot'){
+            formatMarketDepth(response, null)
             dispatch({
               type: HANDLE_LEVEL2_SNAPSHOT,
               payload: response
