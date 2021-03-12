@@ -1,23 +1,35 @@
 import React, {useContext, useEffect} from 'react'
 import styled from 'styled-components'
-import { roundDecimals, formatMoney} from '../utils/formatData';
+import {roundDecimals, formatMoney} from '../utils/formatData';
 import DataContext from '../context/data/dataContext';
+import LiveDataContext from '../context/liveData/liveDataContext';
 
 import LineChart from './LineChart'
 
-const GeneralInfo = ({tickerData: {high_24h, low_24h, open_24h, price, volume_24h, volume_30d, time}}) => {
+const GeneralInfo = () => {
 
   //Getting data from context and destructure it.
   const dataContext = useContext(DataContext)
-  const {historicalData, loading, error, getHistorical} = dataContext;
+  const liveDataContext = useContext(LiveDataContext)
+  //Destructure data and functions from context
+  const {loading, error, getHistorical} = dataContext;
+  const {tickerData, isConnected, socketError, connectToSocket} = liveDataContext;
 
-  //Call for updated historical data when the component is rendered
+  //Destructure ticker data
+  const {time, price, high_24h, low_24h, open_24h, volume_24h, volume_30d} = tickerData
+
+  //Call for updated historical data and connect to the socket when the component is rendered
   useEffect(() => {
     getHistorical()
+    connectToSocket()
   }, [])
 
     return (
       <GeneralInfoStyled>
+        {
+          !tickerData.price ?
+            <h2>CONNECTING</h2>
+          :
         <MainHeader>
           <PriceContainer>
             <small>BTC - USD</small>
@@ -61,10 +73,12 @@ const GeneralInfo = ({tickerData: {high_24h, low_24h, open_24h, price, volume_24
             </Table>
           </TableContainer>
         </MainHeader>
+
+        }
         <ChartContainer>
           {
             !loading && !error ?
-            <LineChart chartData={historicalData}/>
+            <LineChart/>
             :
             <h2>LOADING</h2>
           }
@@ -80,7 +94,6 @@ const GeneralInfoStyled = styled.section`
   grid-row-end: 3;
   grid-column-start: 1;
   grid-column-end: 3;
-  padding: 1rem;
 
   display: flex;
   flex-direction: column;

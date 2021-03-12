@@ -29,10 +29,8 @@ const COINBASE_REST_API = "https://api.pro.coinbase.com"
 const DataState = (props) =>{
     const initialState = {
         product: 'BTC-USD',
-        tickerData: "",
         historicalData: "",
-        level2Data: "",
-        isConnected: false,
+        error: null,
         loading: true
     }
 

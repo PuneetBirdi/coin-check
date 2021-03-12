@@ -1,10 +1,15 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useContext, useRef} from 'react'
+import DataContext from "../context/data/dataContext";
 import { createChart } from "lightweight-charts";
 import styled from 'styled-components';
 
-const LineChart = ({chartData: {candles, volume}}) => {
+const LineChart = () => {
 const ref = useRef();
 const legendRef = useRef();
+
+//Use context to pull historical data and destructure
+const dataContext = useContext(DataContext);
+const { historicalData: {candles, volume}, loading, error, getHistorical } = dataContext;
 
 //Generate the chart on render.
 useEffect(() => {

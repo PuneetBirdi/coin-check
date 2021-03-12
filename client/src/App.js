@@ -14,86 +14,24 @@ import styled from 'styled-components'
 
 //Context
 import DataState from './context/data/dataState'
+import LiveDataState from './context/liveData/liveDataState'
 
 const App = () => {
-  const [tickerData, setTickerData] = useState("");
-  const [level2Data, setLevel2Data] = useState("");
-  const [historicalData, setHistoricalData] = useState("")
-  const [connectionStatus, setConnectionStatus] = useState(false)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(async () => {
-
-  //Get historical price data from REST-API
-    try {
-      const res = await axios.get(
-        "https://api.pro.coinbase.com/products/BTC-USD/candles?granularity=60"
-      );
-
-      const formattedData = await formatChartData(res.data)
-      setHistoricalData(formattedData)
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
-
-    
-  //Connect and subscribe to the appropriate websocket channels.
-    const subscribe = {
-      type: "subscribe",
-      channels: [
-        { name: "ticker", product_ids: ["BTC-USD"] },
-        { name: "level2", product_ids: ["BTC-USD"] },
-      ],
-    };
-    const ws = new WebSocket(
-      "wss://ws-feed-public.sandbox.pro.coinbase.com"
-    );
-    
-    //Send subscription message
-    ws.onopen = () => {
-      ws.send(JSON.stringify(subscribe));
-    };
-
-    //When message received, parse and push into the appropriate arrays depending on if it's ticker data, initial level2 data or a level2 data update.
-    ws.onmessage = (e) => {
-      setConnectionStatus(true)
-
-      const response = (JSON.parse(e.data));
-
-      if(response.type === "ticker"){
-        setTickerData(response);
-      }else if(response.type === 'snapshot'){
-        setLevel2Data(response)
-      }else if(response.type === 'l2update'){
-        //do this.
-      }
-    };
-
-    //If the socket receives and error, set connection status to false, so that an error can be displayed in the UI.
-    ws.onerror = (e) =>{
-      setConnectionStatus(false)
-    }
-  }, [])
-
   return (
     <Router>
-      <Div className="App">
-        <Nav/>
-        {
-          connectionStatus && !loading ? 
-        <Main>
-          <DataState>
-            <GeneralInfo tickerData={tickerData} chartData={historicalData}/>
-          </DataState>
-          <OrderBook/>
-          <News/>
-        </Main>
-        :
-        <h2>No connection.</h2>
-        }
-        <Footer/>
-      </Div>
+      <LiveDataState>
+        <Div className="App">
+          <Nav/>
+          <Main>
+                <DataState>
+                  <GeneralInfo/>
+                </DataState>
+              <OrderBook/>
+            <News/>
+          </Main>
+          <Footer/>
+        </Div>
+      </LiveDataState>
     </Router>
   );
 }
