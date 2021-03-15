@@ -17,22 +17,48 @@ const OrderBook = () => {
     level2Update
   } = liveDataContext;
 
-  let { bids, asks } = marketDepth;
+  let { bids, asks, midPrice } = marketDepth;
   return (
     <OrderBookStyled>
       <Heading>OrderBook</Heading>
       {bids ? (
         <Fragment>
           <OrderContainer>
-            {bids.reverse().map((bid) => {
-              return <PriceItem>{formatMoney(bid.price)}</PriceItem>;
-            })}
+            <table style={{ width: "100%", textAlign: "center", borderSpacing: '0'}}>
+              {bids.reverse().map((bid) => {
+                return (
+                  <tr
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      fontSize: "0.75rem",
+                      backgroundColor: 'lightgreen'
+                    }}
+                  >
+                    <td>{formatMoney(bid.price)}</td>
+                  </tr>
+                );
+              })}
+            </table>
           </OrderContainer>
-          <MidPriceContainer>{formatMoney(price)}</MidPriceContainer>
+          <MidPriceContainer>Mid: {formatMoney(midPrice)}</MidPriceContainer>
           <OrderContainer>
-            {asks.reverse().map((ask) => {
-              return <PriceItem>{formatMoney(ask.price)}</PriceItem>;
-            })}
+            <table style={{ width: "100%", textAlign: "center", borderSpacing: '0' }}>
+              {asks.reverse().map((ask) => {
+                return (
+                  <tr
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      fontSize: "0.75rem",
+                      backgroundColor: "red",
+                    }}
+                  >
+                    <td>{formatMoney(ask.price)}</td>
+                  </tr>
+                );
+              })}
+            </table>
           </OrderContainer>
         </Fragment>
       ) : (
@@ -63,14 +89,8 @@ const MidPriceContainer = styled.section`
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
 `
-const OrderContainer = styled.section`
-  flex: 1;
-  overflow-y: scroll;
-  padding: 0.25rem;
-  margin: 0.25rem;
-`
 
-const PriceItem = styled.p`
-  font-size: 0.75rem;
-  margin-bottom: 0.25rem;
+const OrderContainer = styled.div`
+  overflow-y: scroll;
+  max-height: 50%;
 `
