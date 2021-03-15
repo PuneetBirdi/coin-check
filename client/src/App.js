@@ -38,6 +38,7 @@ export default App;
 const Div = styled.div`
   width: 100%;
   height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
 `
@@ -45,6 +46,7 @@ const Div = styled.div`
 const Main = styled.main`
   flex: 1;
   width: 97%;
+  max-height: 90vh;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

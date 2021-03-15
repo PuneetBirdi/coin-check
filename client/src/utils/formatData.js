@@ -72,7 +72,7 @@ export const formatMarketDepth = (snapshot, update) =>{
     //Package response
     const marketDepth = {
         bids,
-        asks,
+        asks: asks.reverse(),
         midPrice
     }
 
