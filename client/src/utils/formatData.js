@@ -37,26 +37,44 @@ export const formatChartData = (array) =>{
 }
 
 export const formatMarketDepth = (snapshot, update) =>{
-    //Cut the response down to just the first 100 asks and bids. The response is already in order of price.
-    const asks = snapshot.asks.slice(0, 100)
-    const bids = snapshot.bids.slice(0, 100)
-    
-
     //Initialize array for final orderbook to be pushed into.
-    const orderBook = []
+    const asks = []
+    const bids = []
 
     //Loop through the array and create elements to show the total quantity, by accumulating all of the quantities of prices
-    let accumulator = 0
-    for (let i = 0; i < asks.length; i++) {
-        const current = asks[i];
-        accumulator += parseFloat(current[1])
-
-        const bookItem = {
-            price: parseFloat(current[0]),
-            quantity: parseFloat(current[1]),
-            totalQuantity: accumulator
+    let askAccumulator = 0
+    let bidAccumulator = 0
+    for (let i = 0; i < 100; i++) {
+        //Handle the asks
+        const currentAsk = snapshot.asks[i];
+        askAccumulator += parseFloat(currentAsk[1])
+        const askItem = {
+            price: parseFloat(currentAsk[0]),
+            quantity: parseFloat(currentAsk[1]),
+            totalQuantity: askAccumulator
         }
-        orderBook.push(bookItem)
+        asks.push(askItem)
+
+        //Handle the bids
+        const currentBid = snapshot.bids[i];
+        bidAccumulator += parseFloat(currentBid[1]);
+        const bidItem = {
+            price: parseFloat(currentBid[0]),
+            quantity: parseFloat(currentBid[1]),
+            totalQuantity: bidAccumulator,
+        };
+        bids.push(bidItem)
     }
-    console.log(orderBook, bids)
+
+    //calculate mid-price
+    const midPrice = (parseFloat(snapshot.bids[0][0]) + parseFloat(snapshot.asks[0][0])) /2
+
+    //Package response
+    const marketDepth = {
+        bids,
+        asks,
+        midPrice
+    }
+
+    return marketDepth
 }

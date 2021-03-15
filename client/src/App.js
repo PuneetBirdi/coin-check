@@ -27,7 +27,6 @@ const App = () => {
               <OrderBook/>
             <News/>
           </Main>
-          <Footer/>
         </Div>
       </LiveDataState>
     </Router>
@@ -51,6 +50,7 @@ const Main = styled.main`
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   grid-gap: 1rem;
+  margin-bottom: 1rem;
 
   > section {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);

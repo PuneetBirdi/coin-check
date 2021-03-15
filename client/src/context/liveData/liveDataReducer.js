@@ -16,7 +16,7 @@ export default (state, action) =>{
       case HANDLE_LEVEL2_SNAPSHOT:
         return {
           ...state,
-          level2Snapshot: action.payload,
+          marketDepth: action.payload,
           isConnected: true,
         };
       case HANDLE_LEVEL2_UPDATE:

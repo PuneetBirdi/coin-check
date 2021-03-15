@@ -24,8 +24,11 @@ const LiveDataState = (props) =>{
   const initialState = {
     product: "BTC-USD",
     tickerData: {},
-    level2Snapshot: {},
-    level2Update: {},
+    marketDepth: {
+      bids:null,
+      asks: null,
+      midPrice: null,
+    },
     isConnected: false,
     error: null,
   };
@@ -43,7 +46,7 @@ const LiveDataState = (props) =>{
     };
 
     //When a message is received, handle the data received depending on if it's ticker data, or level2 data.
-    ws.onmessage = (message) => {
+    ws.onmessage = async (message) => {
         const response = (JSON.parse(message.data))
 
         if(response.type === 'ticker'){
@@ -52,10 +55,9 @@ const LiveDataState = (props) =>{
               payload: response
             })
         }else if(response.type === 'snapshot'){
-            formatMarketDepth(response, null)
             dispatch({
               type: HANDLE_LEVEL2_SNAPSHOT,
-              payload: response
+              payload: await formatMarketDepth(response, null)
             })
         }else if(response.type === 'l2update'){
             dispatch({
@@ -82,8 +84,7 @@ const LiveDataState = (props) =>{
             tickerData: state.tickerData,
             socketError: state.error,
             isConnected: state.isConnected,
-            level2Snapshot: state.level2Snapshot,
-            level2Update: state.level2Update,
+            marketDepth: state.marketDepth,
             connectToSocket,
             }}
         >
