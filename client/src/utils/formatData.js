@@ -35,3 +35,54 @@ export const formatChartData = (array) =>{
 
     return response;
 }
+
+export const formatMarketDepth = (snapshot, update) =>{
+    //Initialize array for final orderbook to be pushed into.
+    const asks = []
+    const bids = []
+
+    //Loop through the array and create elements to show the total quantity, by accumulating all of the quantities of prices
+    let askAccumulator = 0
+    let bidAccumulator = 0
+
+    //Handle the asks and return a formatted object. 
+    for (let i = 0; i < snapshot.asks.length; i++) {
+        //Handle the asks
+        const currentAsk = snapshot.asks[i];
+        askAccumulator += parseFloat(currentAsk[1])
+        const askItem = {
+            price: parseFloat(currentAsk[0]),
+            quantity: parseFloat(currentAsk[1]),
+            totalQuantity: askAccumulator
+        }
+        asks.push(askItem)
+    }
+
+    //Handled the bids and return a formatted object.
+    for (let i = 0; i < snapshot.bids.length; i++) {
+        //Handle the bids
+        const currentBid = snapshot.bids[i];
+        bidAccumulator += parseFloat(currentBid[1]);
+        const bidItem = {
+        price: parseFloat(currentBid[0]),
+        quantity: parseFloat(currentBid[1]),
+        totalQuantity: bidAccumulator,
+        };
+        bids.push(bidItem);
+    }
+    
+
+    //calculate mid-price
+    const midPrice = (parseFloat(snapshot.bids[0][0]) + parseFloat(snapshot.asks[0][0])) /2
+
+    //Package response
+    const marketDepth = {
+        bids,
+        asks: asks.reverse(),
+        askVolume: askAccumulator,
+        bidVolume: bidAccumulator,
+        midPrice
+    }
+
+    return marketDepth
+}

@@ -26,62 +26,93 @@ const GeneralInfo = () => {
 
     return (
       <GeneralInfoStyled>
-        {
-          !tickerData.price ?
-            <h2>CONNECTING</h2>
-          :
-        <MainHeader>
-          <PriceContainer>
-            <small>BTC - USD</small>
-            <h2>{formatMoney(price)}</h2>
-            <small className="timestamp">
-              {time}
-            </small>
-          </PriceContainer>
-          <TableContainer>
-            <Table>
-              <tbody>
-                <tr>
-                  <td>Open</td>
-                  <td>{formatMoney(open_24h)}</td>
-                </tr>
-                <tr>
-                  <td>High</td>
-                  <td>{formatMoney(high_24h)}</td>
-                </tr>
-                <tr>
-                  <td>Low</td>
-                  <td>{formatMoney(low_24h)}</td>
-                </tr>
-              </tbody>
-            </Table>
-            <Table>
-              <tbody>
-                <tr>
-                  <td>Last</td>
-                  <td>325234.00</td>
-                </tr>
-                <tr>
-                  <td>Volume</td>
-                  <td>{roundDecimals(volume_24h, 4)}</td>
-                </tr>
-                <tr>
-                  <td>30 Day Volume</td>
-                  <td>{roundDecimals(volume_30d, 4)}</td>
-                </tr>
-              </tbody>
-            </Table>
-          </TableContainer>
-        </MainHeader>
-
-        }
+        {!tickerData.price ? (
+          <MainHeader>
+            <PriceContainer>
+              <small>BTC - USD</small>
+              <h2>Connecting...</h2>
+              <small className="timestamp">...</small>
+            </PriceContainer>
+            <TableContainer>
+              <Table>
+                <tbody>
+                  <tr>
+                    <td>Open</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>High</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Low</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </Table>
+              <Table>
+                <tbody>
+                  <tr>
+                    <td>Last</td>
+                    <td>325234.00</td>
+                  </tr>
+                  <tr>
+                    <td>Volume</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>30 Day Volume</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </Table>
+            </TableContainer>
+          </MainHeader>
+        ) : (
+          <MainHeader>
+            <PriceContainer>
+              <small>BTC - USD</small>
+              <h2>{formatMoney(price)}</h2>
+              <small className="timestamp">{time}</small>
+            </PriceContainer>
+            <TableContainer>
+              <Table>
+                <tbody>
+                  <tr>
+                    <td>Open</td>
+                    <td>{formatMoney(open_24h)}</td>
+                  </tr>
+                  <tr>
+                    <td>High</td>
+                    <td>{formatMoney(high_24h)}</td>
+                  </tr>
+                  <tr>
+                    <td>Low</td>
+                    <td>{formatMoney(low_24h)}</td>
+                  </tr>
+                </tbody>
+              </Table>
+              <Table>
+                <tbody>
+                  <tr>
+                    <td>Last</td>
+                    <td>325234.00</td>
+                  </tr>
+                  <tr>
+                    <td>Volume</td>
+                    <td>{roundDecimals(volume_24h, 4)}</td>
+                  </tr>
+                  <tr>
+                    <td>30 Day Volume</td>
+                    <td>{roundDecimals(volume_30d, 4)}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </TableContainer>
+          </MainHeader>
+        )}
         <ChartContainer>
-          {
-            !loading && !error ?
-            <LineChart/>
-            :
-            <h2>LOADING</h2>
-          }
+          {!loading && !error ? <LineChart /> : <h2>LOADING</h2>}
         </ChartContainer>
       </GeneralInfoStyled>
     );
