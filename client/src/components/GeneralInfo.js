@@ -27,11 +27,47 @@ const GeneralInfo = () => {
     return (
       <GeneralInfoStyled>
         {!tickerData.price ? (
-          <PriceContainer>
-            <small>BTC - USD</small>
-            <h2>conntecting</h2>
-            <small className="timestamp">timestamp</small>
-          </PriceContainer>
+          <MainHeader>
+            <PriceContainer>
+              <small>BTC - USD</small>
+              <h2>Connecting...</h2>
+              <small className="timestamp">...</small>
+            </PriceContainer>
+            <TableContainer>
+              <Table>
+                <tbody>
+                  <tr>
+                    <td>Open</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>High</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Low</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </Table>
+              <Table>
+                <tbody>
+                  <tr>
+                    <td>Last</td>
+                    <td>325234.00</td>
+                  </tr>
+                  <tr>
+                    <td>Volume</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>30 Day Volume</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </Table>
+            </TableContainer>
+          </MainHeader>
         ) : (
           <MainHeader>
             <PriceContainer>

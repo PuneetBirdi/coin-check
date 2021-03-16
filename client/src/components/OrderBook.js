@@ -30,26 +30,23 @@ const OrderBook = () => {
                 return (
                   <tr
                     style={{
-                      width: "25%",
-                      textAlign: "center",
                       backgroundColor: "rgba(234, 0, 0, 0.30)",
                     }}
                   >
                     <td
                       style={{
-                        width: "15%",
                         fontSize: "0.65rem",
                         fontWeight: "bold",
                         borderLeft: "3px solid red",
                         paddingRight: "0.5rem",
                         textAlign: "right",
+                        width: "50%"
                       }}
                     >
                       {formatMoney(bid.price)}
                     </td>
                     <td
                       style={{
-                        width: "15%",
                         fontSize: "0.65rem",
                         fontWeight: "600",
                         borderRight: "3px solid red",
@@ -67,35 +64,32 @@ const OrderBook = () => {
           <MidPriceContainer>Mid: {formatMoney(midPrice)}</MidPriceContainer>
           <OrderContainer>
             <table
-              style={{ width: "100%", textAlign: "center", borderSpacing: "0" }}
+              style={{ width: "100%", borderSpacing: "0" }}
             >
               {bids.map((bid) => {
                 return (
                   <tr
                     style={{
-                      width: "25%",
-                      textAlign: "center",
                       backgroundColor: "lightgreen",
                     }}
                   >
                     <td
                       style={{
-                        width: "15%",
                         fontSize: "0.65rem",
                         fontWeight: "bold",
-                        borderLeft: "2px solid green",
+                        borderLeft: "3px solid green",
                         paddingRight: "0.5rem",
                         textAlign: "right",
+                        width: '50%'
                       }}
                     >
                       {formatMoney(bid.price)}
                     </td>
                     <td
                       style={{
-                        width: "15%",
                         fontSize: "0.65rem",
                         fontWeight: "bold",
-                        borderRight: "2px solid green",
+                        borderRight: "3px solid green",
                         paddingLeft: "0.5rem",
                         textAlign: "left",
                         fontWeight: "500",

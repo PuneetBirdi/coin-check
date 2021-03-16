@@ -44,7 +44,9 @@ export const formatMarketDepth = (snapshot, update) =>{
     //Loop through the array and create elements to show the total quantity, by accumulating all of the quantities of prices
     let askAccumulator = 0
     let bidAccumulator = 0
-    for (let i = 0; i < 100; i++) {
+
+    //Handle the asks and return a formatted object. 
+    for (let i = 0; i < snapshot.asks.length; i++) {
         //Handle the asks
         const currentAsk = snapshot.asks[i];
         askAccumulator += parseFloat(currentAsk[1])
@@ -54,17 +56,21 @@ export const formatMarketDepth = (snapshot, update) =>{
             totalQuantity: askAccumulator
         }
         asks.push(askItem)
+    }
 
+    //Handled the bids and return a formatted object.
+    for (let i = 0; i < snapshot.bids.length; i++) {
         //Handle the bids
         const currentBid = snapshot.bids[i];
         bidAccumulator += parseFloat(currentBid[1]);
         const bidItem = {
-            price: parseFloat(currentBid[0]),
-            quantity: parseFloat(currentBid[1]),
-            totalQuantity: bidAccumulator,
+        price: parseFloat(currentBid[0]),
+        quantity: parseFloat(currentBid[1]),
+        totalQuantity: bidAccumulator,
         };
-        bids.push(bidItem)
+        bids.push(bidItem);
     }
+    
 
     //calculate mid-price
     const midPrice = (parseFloat(snapshot.bids[0][0]) + parseFloat(snapshot.asks[0][0])) /2
@@ -73,6 +79,8 @@ export const formatMarketDepth = (snapshot, update) =>{
     const marketDepth = {
         bids,
         asks: asks.reverse(),
+        askVolume: askAccumulator,
+        bidVolume: bidAccumulator,
         midPrice
     }
 
