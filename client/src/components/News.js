@@ -11,7 +11,6 @@ const News = () => {
     <NewsStyled>
       <Header>
         <h2>News</h2>
-        <p>Refresh</p>
       </Header>
       <ArticleContainer>
           {
