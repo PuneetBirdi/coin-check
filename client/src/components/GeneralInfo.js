@@ -28,6 +28,10 @@ const GeneralInfo = () => {
     setRange(e.target.value)
     getHistorical(e.target.value);
   };
+
+  const handleRefresh = () =>{
+    getHistorical(range)
+  }
     return (
       <GeneralInfoStyled>
         {!tickerData.price ? (
@@ -81,7 +85,7 @@ const GeneralInfo = () => {
                 <small className="timestamp">{time}</small>
               </div>
               <div className="price-change">
-                <small>24 Hour Change</small>
+                <small>24H Change</small>
                 <h2>{formatMoney(change_24h.points)}</h2>
                 <small className="timestamp">{`${change_24h.percentage}%`}</small>
               </div>
@@ -116,7 +120,7 @@ const GeneralInfo = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="table-heading">30d Volume</td>
+                    <td className="table-heading">30D Volume</td>
                     <td className="table-value">
                       {roundDecimals(volume_30d, 4)}
                     </td>
@@ -139,6 +143,7 @@ const GeneralInfo = () => {
                 <option value={21600}>6 Hours</option>
                 <option value={86400}>1 Day</option>
               </select>
+              <button onClick={handleRefresh}>Refresh Graph</button>
             </Switcher>
           </MainHeader>
         )}
@@ -259,10 +264,16 @@ const Table = styled.table`
 `;
 
 const Switcher = styled.div`
-    p{
-      font-size: 0.75rem;
-    }
-    select{
-      width: 100%;
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  p{
+    font-size: 0.75rem;
+  }
+  select{
+    width: 100%;
+  }
+  button{
+    width: 100%;
+  }
 `;
