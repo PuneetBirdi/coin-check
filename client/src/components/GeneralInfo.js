@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
 import styled from 'styled-components'
-import {roundDecimals, formatMoney} from '../utils/formatData';
+import {roundDecimals, formatMoney, calcPercentageChange} from '../utils/formatData';
 import DataContext from '../context/data/dataContext';
 import LiveDataContext from '../context/liveData/liveDataContext';
 
@@ -58,7 +58,7 @@ const GeneralInfo = () => {
                 <tbody>
                   <tr>
                     <td>Last</td>
-                    <td>325234.00</td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td>Volume</td>

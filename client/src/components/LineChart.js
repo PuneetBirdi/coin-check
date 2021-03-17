@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
 import DataContext from "../context/data/dataContext";
 import { createChart } from "lightweight-charts";
+import { formatMoney, roundDecimals } from '../utils/formatData'
 import styled from 'styled-components';
 
 const LineChart = () => {
@@ -87,16 +88,14 @@ useEffect(() => {
       prices = iterator.next().value
       volume = iterator.next().value
 
-      legendRef.current.textContent = `High: ${prices.high} | Low: ${prices.low} | Open: ${prices.open} | Close: ${prices.close} | Volume: ${volume}`;
+      legendRef.current.textContent = `High: ${formatMoney(prices.high)} | Low: ${formatMoney(prices.low)} | Open: ${formatMoney(prices.open)} | Close: ${formatMoney(prices.close)} | Volume: ${roundDecimals(volume, 4)}`;
     } else {
       legendRef.current.textContent = 'BTC - USD'
     }
   });
 }, []);
 
-const changeRange = (e) =>{
-  getHistorical(e.target.value)
-}
+
 return (
   <>
     <div ref={ref} styling={{ position: "relative" }}>
