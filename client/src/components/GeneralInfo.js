@@ -84,15 +84,15 @@ const GeneralInfo = () => {
                 <tbody>
                   <tr>
                     <td className="table-heading">Open</td>
-                    <td>{formatMoney(open_24h)}</td>
+                    <td className="table-value">{formatMoney(open_24h)}</td>
                   </tr>
                   <tr>
                     <td className="table-heading">High</td>
-                    <td>{formatMoney(high_24h)}</td>
+                    <td className="table-value">{formatMoney(high_24h)}</td>
                   </tr>
                   <tr>
                     <td className="table-heading">Low</td>
-                    <td>{formatMoney(low_24h)}</td>
+                    <td className="table-value">{formatMoney(low_24h)}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -100,15 +100,19 @@ const GeneralInfo = () => {
                 <tbody>
                   <tr>
                     <td className="table-heading">Last</td>
-                    <td>{formatMoney(price)}</td>
+                    <td className="table-value">{formatMoney(price)}</td>
                   </tr>
                   <tr>
                     <td className="table-heading">Volume</td>
-                    <td>{roundDecimals(volume_24h, 4)}</td>
+                    <td className="table-value">
+                      {roundDecimals(volume_24h, 4)}
+                    </td>
                   </tr>
                   <tr>
                     <td className="table-heading">30d Volume</td>
-                    <td>{roundDecimals(volume_30d, 4)}</td>
+                    <td className="table-value">
+                      {roundDecimals(volume_30d, 4)}
+                    </td>
                   </tr>
                 </tbody>
               </Table>
@@ -183,6 +187,9 @@ const PriceContainer = styled.div`
 const TableContainer = styled.div`
     width: auto;
     display: flex;
+    margin-right: 2.0rem;
+    justify-content: flex-end;
+    flex: 1;
 `
 const ChartContainer = styled.section`
     flex: 1;
@@ -193,12 +200,26 @@ const ChartContainer = styled.section`
     }
 `
 const Table = styled.table`
-    font-size: 0.75rem;
-    margin-left: 4.0rem;
+  font-size: 0.75rem;
+  margin-left: 2rem;
 
-    >tbody .table-heading{
-      padding-right: 1.5rem;
+  >tbody>tr{
+    border-bottom: 1px solid gray;
+  }
+
+  > tbody .table-heading {
+    padding-right: 1.5rem;
+  }
+  > tbody .table-value {
+    text-align: right;
+  }
+`;
+
+const Switcher = styled.div`
+    p{
+      font-size: 0.75rem;
     }
-`
-
-const Switcher = styled.div``;
+    select{
+      width: 100%;
+    }
+`;
