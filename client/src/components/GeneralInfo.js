@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {roundDecimals, formatMoney} from '../utils/formatData';
 import DataContext from '../context/data/dataContext';
@@ -7,7 +7,7 @@ import LiveDataContext from '../context/liveData/liveDataContext';
 import LineChart from './LineChart'
 
 const GeneralInfo = () => {
-
+  const [range, setRange] = useState(60)
   //Getting data from context and destructure it.
   const dataContext = useContext(DataContext)
   const liveDataContext = useContext(LiveDataContext)
@@ -20,10 +20,14 @@ const GeneralInfo = () => {
 
   //Call for updated historical data and connect to the socket when the component is rendered
   useEffect(() => {
-    getHistorical()
+    getHistorical(range)
     connectToSocket()
   }, [])
 
+  const changeRange = (e) => {
+    setRange(e.target.value)
+    getHistorical(e.target.value);
+  };
     return (
       <GeneralInfoStyled>
         {!tickerData.price ? (
@@ -79,15 +83,15 @@ const GeneralInfo = () => {
               <Table>
                 <tbody>
                   <tr>
-                    <td>Open</td>
+                    <td className="table-heading">Open</td>
                     <td>{formatMoney(open_24h)}</td>
                   </tr>
                   <tr>
-                    <td>High</td>
+                    <td className="table-heading">High</td>
                     <td>{formatMoney(high_24h)}</td>
                   </tr>
                   <tr>
-                    <td>Low</td>
+                    <td className="table-heading">Low</td>
                     <td>{formatMoney(low_24h)}</td>
                   </tr>
                 </tbody>
@@ -95,20 +99,36 @@ const GeneralInfo = () => {
               <Table>
                 <tbody>
                   <tr>
-                    <td>Last</td>
-                    <td>325234.00</td>
+                    <td className="table-heading">Last</td>
+                    <td>{formatMoney(price)}</td>
                   </tr>
                   <tr>
-                    <td>Volume</td>
+                    <td className="table-heading">Volume</td>
                     <td>{roundDecimals(volume_24h, 4)}</td>
                   </tr>
                   <tr>
-                    <td>30 Day Volume</td>
+                    <td className="table-heading">30d Volume</td>
                     <td>{roundDecimals(volume_30d, 4)}</td>
                   </tr>
                 </tbody>
               </Table>
             </TableContainer>
+            <Switcher>
+              <p>Candle Duration</p>
+              <select
+                value={range}
+                name="range"
+                id="range"
+                onChange={changeRange}
+              >
+                <option value={60}>1 Min</option>
+                <option value={300}>5 Min</option>
+                <option value={900}>15 Min</option>
+                <option value={3600}>1 Hour</option>
+                <option value={21600}>6 Hours</option>
+                <option value={86400}>1 Day</option>
+              </select>
+            </Switcher>
           </MainHeader>
         )}
         <ChartContainer>
@@ -174,5 +194,11 @@ const ChartContainer = styled.section`
 `
 const Table = styled.table`
     font-size: 0.75rem;
-    margin-left: 2.0rem;
+    margin-left: 4.0rem;
+
+    >tbody .table-heading{
+      padding-right: 1.5rem;
+    }
 `
+
+const Switcher = styled.div``;

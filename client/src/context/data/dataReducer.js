@@ -26,7 +26,7 @@ export default (state, action) => {
       return{
         ...state,
         news: action.payload,
-        loading: false,
+        loadingNews: false,
       }
     case SET_LOADING:
       return {

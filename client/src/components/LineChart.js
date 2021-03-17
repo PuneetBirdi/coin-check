@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useRef} from 'react'
+import React, {useState, useEffect, useContext, useRef} from 'react'
 import DataContext from "../context/data/dataContext";
 import { createChart } from "lightweight-charts";
 import styled from 'styled-components';
@@ -6,6 +6,9 @@ import styled from 'styled-components';
 const LineChart = () => {
 const ref = useRef();
 const legendRef = useRef();
+
+//State for managing time range
+const [range, setRange] = useState(null)
 
 //Use context to pull historical data and destructure
 const dataContext = useContext(DataContext);
@@ -89,12 +92,14 @@ useEffect(() => {
       legendRef.current.textContent = 'BTC - USD'
     }
   });
-
 }, []);
 
+const changeRange = (e) =>{
+  getHistorical(e.target.value)
+}
 return (
   <>
-    <div ref={ref} styling={{position:'relative'}}>
+    <div ref={ref} styling={{ position: "relative" }}>
       <Legend>
         <p ref={legendRef}>BTC - USD</p>
       </Legend>
@@ -113,8 +118,11 @@ const Legend = styled.div`
   font-size: 12px;
   line-height: 18px;
   font-weight: 300;
+  display: flex;
+  justify-content: space-between; 
 
   >p{
     font-size: 0.66rem;
   }
 `;
+

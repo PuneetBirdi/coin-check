@@ -33,20 +33,21 @@ const DataState = (props) =>{
         historicalData: "",
         news: null,
         error: null,
-        loading: true
+        loading: true,
+        loadingNews: true,
     }
 
     const [state, dispatch] = useReducer(DataReducer, initialState)
 
 
     //Initial REST-API call for historical data
-    const getHistorical = async (product) =>{
+    const getHistorical = async (range) =>{
         getNews();
         setLoading();
         //Make API request based on parameters that were passed in.
         try {
             const res = await axios.get(
-                `${COINBASE_REST_API}/products/BTC-USD/candles?granularity=60`
+                `${COINBASE_REST_API}/products/BTC-USD/candles?granularity=${range}`
             );
 
             //Format response to appropriately fit charts
@@ -69,12 +70,10 @@ const DataState = (props) =>{
     const getNews = async (product) =>{
       try {
         const res = await axios.get(NEWS_REST_API)
-        
         dispatch({
           type: GET_NEWS,
           payload: res.data.articles
         })
-
       } catch (error) {
         
       }
