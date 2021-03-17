@@ -1,6 +1,5 @@
 import React, {useContext, Fragment} from 'react'
 import styled from 'styled-components'
-import DataContext from "../context/data/dataContext";
 import {roundDecimals, formatMoney} from '../utils/formatData';
 import LiveDataContext from "../context/liveData/liveDataContext";
 

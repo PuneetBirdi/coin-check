@@ -5,6 +5,7 @@ import {
   SET_LOADING,
   SET_CONNECTION_STATUS,
   DATA_ERROR,
+  GET_NEWS,
 } from "../types";
 
 export default (state, action) => {
@@ -21,6 +22,12 @@ export default (state, action) => {
         error: action.payload,
         loading: false,
       };
+    case GET_NEWS:
+      return{
+        ...state,
+        news: action.payload,
+        loading: false,
+      }
     case SET_LOADING:
       return {
         ...state,

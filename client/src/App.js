@@ -18,16 +18,16 @@ const App = () => {
   return (
     <Router>
       <LiveDataState>
-        <Div className="App">
-          <Nav/>
-          <Main>
-                <DataState>
-                  <GeneralInfo/>
-                </DataState>
-              <OrderBook/>
-            <News/>
-          </Main>
-        </Div>
+        <DataState>
+          <Div className="App">
+            <Nav/>
+            <Main>
+                    <GeneralInfo/>
+                <OrderBook/>
+              <News/>
+            </Main>
+          </Div>
+        </DataState>
       </LiveDataState>
     </Router>
   );
