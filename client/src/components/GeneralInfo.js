@@ -16,7 +16,7 @@ const GeneralInfo = () => {
   const {tickerData, isConnected, socketError, connectToSocket} = liveDataContext;
 
   //Destructure ticker data
-  const {time, price, high_24h, low_24h, open_24h, volume_24h, volume_30d} = tickerData
+  const {change_24h, time, price, high_24h, low_24h, open_24h, volume_24h, volume_30d} = tickerData
 
   //Call for updated historical data and connect to the socket when the component is rendered
   useEffect(() => {
@@ -75,9 +75,16 @@ const GeneralInfo = () => {
         ) : (
           <MainHeader>
             <PriceContainer>
-              <small>BTC - USD</small>
-              <h2>{formatMoney(price)}</h2>
-              <small className="timestamp">{time}</small>
+              <div className="current-price">
+                <small>BTC - USD</small>
+                <h2>{formatMoney(price)}</h2>
+                <small className="timestamp">{time}</small>
+              </div>
+              <div className="price-change">
+                <small>24 Hour Change</small>
+                <h2>{formatMoney(change_24h.points)}</h2>
+                <small className="timestamp">{`${change_24h.percentage}%`}</small>
+              </div>
             </PriceContainer>
             <TableContainer>
               <Table>
@@ -162,26 +169,62 @@ const MainHeader = styled.section`
 `
 const PriceContainer = styled.div`
   width: auto;
+  display: flex;
 
-  > small {
-    padding: 0;
-    margin: 0;
-    font-size: 0.75rem;
-    display: block;
-    width: 100%;
-    text-align: right;
-    color: gray;
+  .current-price {
+    margin-right: 1.0rem;
+    > small {
+      padding: 0;
+      margin: 0;
+      font-size: 0.75rem;
+      display: block;
+      width: 100%;
+      text-align: right;
+      color: gray;
+    }
+
+    > h2 {
+      padding: 0;
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    > .timestamp {
+      font-size: 0.5rem;
+    }
   }
 
-  > h2 {
-    padding: 0;
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 900;
-  }
+  .price-change {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: green;
 
-  > .timestamp {
-    font-size: 0.5rem;
+    > small {
+      padding: 0;
+      margin: 0;
+      font-size: 0.75rem;
+      display: block;
+      width: 100%;
+      text-align: right;
+      color: gray;
+    }
+
+    > h2 {
+      padding: 0;
+      margin: 0;
+      font-size: 1.0rem;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    > .timestamp {
+      font-size: 0.5rem;
+      color: green;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
   }
 `;
 const TableContainer = styled.div`
