@@ -27,7 +27,7 @@ export const formatChartData = (array) =>{
         };
         const volumePoint = {
           time: entry[0],
-          value: parseInt(entry[5]),
+          value: parseFloat(entry[5]),
         };
         response.volume.push(volumePoint)
         response.candles.push(candle)

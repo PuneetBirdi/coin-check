@@ -34,6 +34,9 @@ useEffect(() => {
         visible: true,
       },
     },
+    timeScale:{
+      timeVisible: true
+    }
   });
 
   //Set chart to candlestick type.
