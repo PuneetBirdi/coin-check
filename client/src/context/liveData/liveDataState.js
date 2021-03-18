@@ -1,5 +1,5 @@
  import { useReducer } from 'react';
- import { formatMarketDepth } from '../../utils/formatData';
+ import { calcPercentageChange, formatMarketDepth } from '../../utils/formatData';
  import LiveDataContext from './liveDataContext';
  import LiveDataReducer from './liveDataReducer';
  import {
@@ -50,9 +50,20 @@ const LiveDataState = (props) =>{
         const response = (JSON.parse(message.data))
 
         if(response.type === 'ticker'){
+          const tickerData = {
+            price: response.price,
+            open_24h: response.open_24h,
+            volume_24h: response.volume_24h,
+            low_24h: response.low_24h,
+            high_24h: response.high_24h,
+            volume_30d: response.volume_30d,
+            side: response.side,
+            time: response.time,
+            change_24h: calcPercentageChange(response.open_24h, response.price)
+          }
             dispatch({
               type: HANDLE_TICKER_DATA,
-              payload: response
+              payload: tickerData
             })
         }else if(response.type === 'snapshot'){
             dispatch({

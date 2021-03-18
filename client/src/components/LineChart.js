@@ -1,6 +1,7 @@
 import React, {useEffect, useContext, useRef} from 'react'
 import DataContext from "../context/data/dataContext";
 import { createChart } from "lightweight-charts";
+import { formatMoney, roundDecimals } from '../utils/formatData'
 import styled from 'styled-components';
 
 const LineChart = () => {
@@ -9,7 +10,7 @@ const legendRef = useRef();
 
 //Use context to pull historical data and destructure
 const dataContext = useContext(DataContext);
-const { historicalData: {candles, volume}, loading, error, getHistorical } = dataContext;
+const { historicalData: {candles, volume} } = dataContext;
 
 //Generate the chart on render.
 useEffect(() => {
@@ -34,6 +35,9 @@ useEffect(() => {
         visible: true,
       },
     },
+    timeScale:{
+      timeVisible: true
+    }
   });
 
   //Set chart to candlestick type.
@@ -81,17 +85,17 @@ useEffect(() => {
       prices = iterator.next().value
       volume = iterator.next().value
 
-      legendRef.current.textContent = `High: ${prices.high} | Low: ${prices.low} | Open: ${prices.open} | Close: ${prices.close} | Volume: ${volume}`;
+      legendRef.current.textContent = `High: ${formatMoney(prices.high)} | Low: ${formatMoney(prices.low)} | Open: ${formatMoney(prices.open)} | Close: ${formatMoney(prices.close)} | Volume: ${roundDecimals(volume, 4)}`;
     } else {
       legendRef.current.textContent = 'BTC - USD'
     }
   });
-
 }, []);
+
 
 return (
   <>
-    <div ref={ref} styling={{position:'relative'}}>
+    <div ref={ref} styling={{ position: "relative" }}>
       <Legend>
         <p ref={legendRef}>BTC - USD</p>
       </Legend>
@@ -110,8 +114,11 @@ const Legend = styled.div`
   font-size: 12px;
   line-height: 18px;
   font-weight: 300;
+  display: flex;
+  justify-content: space-between; 
 
   >p{
     font-size: 0.66rem;
   }
 `;
+

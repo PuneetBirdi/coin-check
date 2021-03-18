@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {roundDecimals, formatMoney} from '../utils/formatData';
 import DataContext from '../context/data/dataContext';
@@ -7,23 +7,31 @@ import LiveDataContext from '../context/liveData/liveDataContext';
 import LineChart from './LineChart'
 
 const GeneralInfo = () => {
-
+  const [range, setRange] = useState(60)
   //Getting data from context and destructure it.
   const dataContext = useContext(DataContext)
   const liveDataContext = useContext(LiveDataContext)
   //Destructure data and functions from context
   const {loading, error, getHistorical} = dataContext;
-  const {tickerData, isConnected, socketError, connectToSocket} = liveDataContext;
+  const {tickerData, connectToSocket} = liveDataContext;
 
   //Destructure ticker data
-  const {time, price, high_24h, low_24h, open_24h, volume_24h, volume_30d} = tickerData
+  const {change_24h, time, price, high_24h, low_24h, open_24h, volume_24h, volume_30d} = tickerData
 
   //Call for updated historical data and connect to the socket when the component is rendered
   useEffect(() => {
-    getHistorical()
+    getHistorical(range)
     connectToSocket()
   }, [])
 
+  const changeRange = (e) => {
+    setRange(e.target.value)
+    getHistorical(e.target.value);
+  };
+
+  const handleRefresh = () =>{
+    getHistorical(range)
+  }
     return (
       <GeneralInfoStyled>
         {!tickerData.price ? (
@@ -54,7 +62,7 @@ const GeneralInfo = () => {
                 <tbody>
                   <tr>
                     <td>Last</td>
-                    <td>325234.00</td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td>Volume</td>
@@ -71,44 +79,72 @@ const GeneralInfo = () => {
         ) : (
           <MainHeader>
             <PriceContainer>
-              <small>BTC - USD</small>
-              <h2>{formatMoney(price)}</h2>
-              <small className="timestamp">{time}</small>
+              <div className="current-price">
+                <small>BTC - USD</small>
+                <h2>{formatMoney(price)}</h2>
+                <small className="timestamp">{time}</small>
+              </div>
+              <div className="price-change">
+                <small>24H Change</small>
+                <h2>{formatMoney(change_24h.points)}</h2>
+                <small className="timestamp">{`${change_24h.percentage}%`}</small>
+              </div>
             </PriceContainer>
             <TableContainer>
               <Table>
                 <tbody>
                   <tr>
-                    <td>Open</td>
-                    <td>{formatMoney(open_24h)}</td>
+                    <td className="table-heading">Open</td>
+                    <td className="table-value">{formatMoney(open_24h)}</td>
                   </tr>
                   <tr>
-                    <td>High</td>
-                    <td>{formatMoney(high_24h)}</td>
+                    <td className="table-heading">High</td>
+                    <td className="table-value">{formatMoney(high_24h)}</td>
                   </tr>
                   <tr>
-                    <td>Low</td>
-                    <td>{formatMoney(low_24h)}</td>
+                    <td className="table-heading">Low</td>
+                    <td className="table-value">{formatMoney(low_24h)}</td>
                   </tr>
                 </tbody>
               </Table>
               <Table>
                 <tbody>
                   <tr>
-                    <td>Last</td>
-                    <td>325234.00</td>
+                    <td className="table-heading">Last</td>
+                    <td className="table-value">{formatMoney(price)}</td>
                   </tr>
                   <tr>
-                    <td>Volume</td>
-                    <td>{roundDecimals(volume_24h, 4)}</td>
+                    <td className="table-heading">Volume</td>
+                    <td className="table-value">
+                      {roundDecimals(volume_24h, 4)}
+                    </td>
                   </tr>
                   <tr>
-                    <td>30 Day Volume</td>
-                    <td>{roundDecimals(volume_30d, 4)}</td>
+                    <td className="table-heading">30D Volume</td>
+                    <td className="table-value">
+                      {roundDecimals(volume_30d, 4)}
+                    </td>
                   </tr>
                 </tbody>
               </Table>
             </TableContainer>
+            <Switcher>
+              <p>Candle Duration</p>
+              <select
+                value={range}
+                name="range"
+                id="range"
+                onChange={changeRange}
+              >
+                <option value={60}>1 Min</option>
+                <option value={300}>5 Min</option>
+                <option value={900}>15 Min</option>
+                <option value={3600}>1 Hour</option>
+                <option value={21600}>6 Hours</option>
+                <option value={86400}>1 Day</option>
+              </select>
+              <button onClick={handleRefresh}>Refresh Graph</button>
+            </Switcher>
           </MainHeader>
         )}
         <ChartContainer>
@@ -138,31 +174,70 @@ const MainHeader = styled.section`
 `
 const PriceContainer = styled.div`
   width: auto;
+  display: flex;
 
-  > small {
-    padding: 0;
-    margin: 0;
-    font-size: 0.75rem;
-    display: block;
-    width: 100%;
-    text-align: right;
-    color: gray;
+  .current-price {
+    margin-right: 1.0rem;
+    > small {
+      padding: 0;
+      margin: 0;
+      font-size: 0.75rem;
+      display: block;
+      width: 100%;
+      text-align: right;
+      color: gray;
+    }
+
+    > h2 {
+      padding: 0;
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    > .timestamp {
+      font-size: 0.5rem;
+    }
   }
 
-  > h2 {
-    padding: 0;
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 900;
-  }
+  .price-change {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: green;
 
-  > .timestamp {
-    font-size: 0.5rem;
+    > small {
+      padding: 0;
+      margin: 0;
+      font-size: 0.75rem;
+      display: block;
+      width: 100%;
+      text-align: right;
+      color: gray;
+    }
+
+    > h2 {
+      padding: 0;
+      margin: 0;
+      font-size: 1.0rem;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    > .timestamp {
+      font-size: 0.5rem;
+      color: green;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
   }
 `;
 const TableContainer = styled.div`
     width: auto;
     display: flex;
+    margin-right: 2.0rem;
+    justify-content: flex-end;
+    flex: 1;
 `
 const ChartContainer = styled.section`
     flex: 1;
@@ -173,6 +248,32 @@ const ChartContainer = styled.section`
     }
 `
 const Table = styled.table`
+  font-size: 0.75rem;
+  margin-left: 2rem;
+
+  >tbody>tr{
+    border-bottom: 1px solid gray;
+  }
+
+  > tbody .table-heading {
+    padding-right: 1.5rem;
+  }
+  > tbody .table-value {
+    text-align: right;
+  }
+`;
+
+const Switcher = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  p{
     font-size: 0.75rem;
-    margin-left: 2.0rem;
-`
+  }
+  select{
+    width: 100%;
+  }
+  button{
+    width: 100%;
+  }
+`;

@@ -1,9 +1,6 @@
 import {
-  CONNECT_TO_SOCKET,
-  HANDLE_FEED,
   GET_HISTORICAL_DATA,
   SET_LOADING,
-  SET_CONNECTION_STATUS,
   DATA_ERROR,
   GET_NEWS,
 } from "../types";
@@ -26,7 +23,7 @@ export default (state, action) => {
       return{
         ...state,
         news: action.payload,
-        loading: false,
+        loadingNews: false,
       }
     case SET_LOADING:
       return {

@@ -1,4 +1,3 @@
-import moment from 'moment'
 
 export const roundDecimals = (value, decimals) =>{
     const number = parseFloat(value)
@@ -27,7 +26,7 @@ export const formatChartData = (array) =>{
         };
         const volumePoint = {
           time: entry[0],
-          value: parseInt(entry[5]),
+          value: parseFloat(entry[5]),
         };
         response.volume.push(volumePoint)
         response.candles.push(candle)
@@ -85,4 +84,14 @@ export const formatMarketDepth = (snapshot, update) =>{
     }
 
     return marketDepth
+}
+
+export const calcPercentageChange = (initial, current) =>{
+    const factor = current/initial;
+    const percentage = (factor - 1) * 100;
+    const change = {
+        percentage: roundDecimals(percentage, 2),
+        points: roundDecimals((current-initial), 2)
+    }
+    return change
 }
