@@ -22,8 +22,8 @@ const App = () => {
             <Nav/>
             <Main>
               <GeneralInfo/>
-              <OrderBook/>
               <News/>
+              <OrderBook/>
             </Main>
           </Div>
         </DataState>

@@ -15,92 +15,15 @@ const OrderBook = () => {
 
   return (
     <OrderBookStyled>
-      <Header>OrderBook</Header>
-      {bids ? (
-        <Fragment>
-          <OrderContainer>
-            <table style={{ width: "100%", borderSpacing: "0" }}>
-              {asks.map((ask) => {
-                return (
-                  <tr
-                    style={{
-                      backgroundColor: "rgba(234, 0, 0, 0.30)",
-                    }}
-                    key={ask.price}
-                  >
-                    <td
-                      style={{
-                        fontSize: "0.65rem",
-                        fontWeight: "bold",
-                        borderLeft: "3px solid red",
-                        paddingRight: "0.5rem",
-                        textAlign: "right",
-                        width: "50%"
-                      }}
-                    >
-                      {formatMoney(ask.price)}
-                    </td>
-                    <td
-                      style={{
-                        fontSize: "0.65rem",
-                        fontWeight: "600",
-                        borderRight: "3px solid red",
-                        paddingLeft: "0.5rem",
-                        textAlign: "left",
-                      }}
-                    >
-                      {roundDecimals(ask.quantity, 6)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </table>
-          </OrderContainer>
-          <MidPriceContainer>Mid: {formatMoney(midPrice)}</MidPriceContainer>
-          <OrderContainer>
-            <table
-              style={{ width: "100%", borderSpacing: "0" }}
-            >
-              {bids.map((bid) => {
-                return (
-                  <tr
-                    style={{
-                      backgroundColor: "lightgreen",
-                    }}
-                    key={bid.price}
-                  >
-                    <td
-                      style={{
-                        fontSize: "0.65rem",
-                        fontWeight: "bold",
-                        borderLeft: "3px solid green",
-                        paddingRight: "0.5rem",
-                        textAlign: "right",
-                        width: '50%'
-                      }}
-                    >
-                      {formatMoney(bid.price)}
-                    </td>
-                    <td
-                      style={{
-                        fontSize: "0.65rem",
-                        fontWeight: "bold",
-                        borderRight: "3px solid green",
-                        paddingLeft: "0.5rem",
-                        textAlign: "left",
-                      }}
-                    >
-                      {roundDecimals(bid.quantity, 6)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </table>
-          </OrderContainer>
-        </Fragment>
-      ) : (
-        <p>loading</p>
-      )}
+      <Header>Market Depth</Header>
+      <ChartContainer>
+        <section>Chart</section>
+        <div className='mid-price'>
+          <small>Mid</small>
+          <p>$44,232.22</p>
+        </div>
+        <section>Chart</section>
+      </ChartContainer>
     </OrderBookStyled>
   );
 }
@@ -108,8 +31,10 @@ const OrderBook = () => {
 export default OrderBook
 
 const OrderBookStyled = styled.section`
-  grid-row-start: 1;
-  grid-row-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 3;
   display: flex;
   flex-direction: column;
 `;
@@ -120,16 +45,23 @@ const Header = styled.h2`
   margin-bottom: 0.5rem;
   text-align: center;
   font-size: 1.0rem;
-`
-const MidPriceContainer = styled.section`
-  padding: 0.5rem;
   text-align: center;
-  border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
-  font-weight: bold;
 `
 
-const OrderContainer = styled.div`
-  overflow-y: scroll;
-  max-height: 50%;
+const ChartContainer = styled.div`
+  display: flex;
+  height: 100%;
+
+  > .mid-price{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  >section{
+    flex: 1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
 `

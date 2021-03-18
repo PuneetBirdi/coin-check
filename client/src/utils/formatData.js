@@ -45,7 +45,7 @@ export const formatMarketDepth = (snapshot, update) =>{
     let bidAccumulator = 0
 
     //Handle the asks and return a formatted object. 
-    for (let i = 0; i < snapshot.asks.length; i++) {
+    for (let i = 0; i < 30; i++) {
         //Handle the asks
         const currentAsk = snapshot.asks[i];
         askAccumulator += parseFloat(currentAsk[1])
@@ -58,7 +58,7 @@ export const formatMarketDepth = (snapshot, update) =>{
     }
 
     //Handled the bids and return a formatted object.
-    for (let i = 0; i < snapshot.bids.length; i++) {
+    for (let i = 0; i < 30; i++) {
         //Handle the bids
         const currentBid = snapshot.bids[i];
         bidAccumulator += parseFloat(currentBid[1]);

@@ -30,14 +30,10 @@ const News = () => {
 export default News
 
 const NewsStyled = styled.section`
-  grid-row-start: 3;
-  grid-row-end: 3;
-  grid-column-start: 1;
-  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 4;
   display: flex;
   flex-direction: column;
-
-  overflow-x: hidden;
 `;
 
 const Header = styled.div`
@@ -55,6 +51,6 @@ const Header = styled.div`
 
 const ArticleContainer = styled.div`
     flex: 1;
-    display: flex;
     overflow-x: scroll;
+    overflow-y: hidden;
 `

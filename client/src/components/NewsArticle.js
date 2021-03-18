@@ -17,11 +17,10 @@ const NewsArticle = ({article: {source, title, description, url, urlToImage}}) =
 export default NewsArticle
 
 const StyledNewsArticle = styled.section`
-    max-width: 300px;
+    max-width: 100%;
     min-width: 300px;
     max-height: 100px;
     padding: 0.5rem; 
-    border-right: 1px solid lightgray;
     
     img{
         max-width: 100%;
