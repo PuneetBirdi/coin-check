@@ -66,6 +66,7 @@ const LiveDataState = (props) =>{
               payload: tickerData
             })
         }else if(response.type === 'snapshot'){
+          console.log(response)
             dispatch({
               type: HANDLE_LEVEL2_SNAPSHOT,
               payload: await formatMarketDepth(response, null)

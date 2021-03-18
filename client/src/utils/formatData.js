@@ -36,54 +36,38 @@ export const formatChartData = (array) =>{
 }
 
 export const formatMarketDepth = (snapshot, update) =>{
-    //Initialize array for final orderbook to be pushed into.
-    const asks = []
-    const bids = []
+  //Initialize array for final orderbook to be pushed into.
+  const asks = [];
+  const bids = [];
 
-    //Loop through the array and create elements to show the total quantity, by accumulating all of the quantities of prices
-    let askAccumulator = 0
-    let bidAccumulator = 0
+  //Loop through the array and create elements to show the total quantity, by accumulating all of the quantities of prices
+  let askAccumulator = 0;
+  let bidAccumulator = 0;
 
-    //Handle the asks and return a formatted object. 
-    for (let i = 0; i < 30; i++) {
-        //Handle the asks
-        const currentAsk = snapshot.asks[i];
-        askAccumulator += parseFloat(currentAsk[1])
-        const askItem = {
-            price: parseFloat(currentAsk[0]),
-            quantity: parseFloat(currentAsk[1]),
-            totalQuantity: askAccumulator
-        }
-        asks.push(askItem)
-    }
+  for (let i = 0; i < 100; i++) {
+    bidAccumulator += parseFloat(snapshot.bids[i][1]);
+    let numBid = [parseFloat(snapshot.bids[i][0]), bidAccumulator,];
+    bids.push(numBid);
 
-    //Handled the bids and return a formatted object.
-    for (let i = 0; i < 30; i++) {
-        //Handle the bids
-        const currentBid = snapshot.bids[i];
-        bidAccumulator += parseFloat(currentBid[1]);
-        const bidItem = {
-        price: parseFloat(currentBid[0]),
-        quantity: parseFloat(currentBid[1]),
-        totalQuantity: bidAccumulator,
-        };
-        bids.push(bidItem);
-    }
-    
+    askAccumulator += parseFloat(snapshot.asks[i][1]);
+    let numAsk = [parseFloat(snapshot.asks[i][0]), askAccumulator];
+    asks.push(numAsk);
+  }
 
-    //calculate mid-price
-    const midPrice = (parseFloat(snapshot.bids[0][0]) + parseFloat(snapshot.asks[0][0])) /2
+  //calculate mid-price
+  const midPrice =
+    (parseFloat(snapshot.bids[0][0]) + parseFloat(snapshot.asks[0][0])) / 2;
 
-    //Package response
-    const marketDepth = {
-        bids,
-        asks: asks.reverse(),
-        askVolume: askAccumulator,
-        bidVolume: bidAccumulator,
-        midPrice
-    }
+  //Package response
+  const marketDepth = {
+    bids,
+    asks: asks.reverse(),
+    askVolume: askAccumulator,
+    bidVolume: bidAccumulator,
+    midPrice,
+  };
 
-    return marketDepth
+  return marketDepth;
 }
 
 export const calcPercentageChange = (initial, current) =>{
@@ -95,3 +79,5 @@ export const calcPercentageChange = (initial, current) =>{
     }
     return change
 }
+
+
