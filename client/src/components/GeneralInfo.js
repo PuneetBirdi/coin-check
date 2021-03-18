@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
 import styled from 'styled-components'
-import {roundDecimals, formatMoney, calcPercentageChange} from '../utils/formatData';
+import {roundDecimals, formatMoney} from '../utils/formatData';
 import DataContext from '../context/data/dataContext';
 import LiveDataContext from '../context/liveData/liveDataContext';
 
@@ -13,7 +13,7 @@ const GeneralInfo = () => {
   const liveDataContext = useContext(LiveDataContext)
   //Destructure data and functions from context
   const {loading, error, getHistorical} = dataContext;
-  const {tickerData, isConnected, socketError, connectToSocket} = liveDataContext;
+  const {tickerData, connectToSocket} = liveDataContext;
 
   //Destructure ticker data
   const {change_24h, time, price, high_24h, low_24h, open_24h, volume_24h, volume_30d} = tickerData

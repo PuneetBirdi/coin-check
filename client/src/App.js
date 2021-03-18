@@ -3,7 +3,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 //Custom build components
 import Nav from './components/layout/Nav';
-import Footer from './components/layout/Footer';
 import GeneralInfo from './components/GeneralInfo';
 import OrderBook from './components/OrderBook';
 import News from './components/News';
@@ -22,8 +21,8 @@ const App = () => {
           <Div className="App">
             <Nav/>
             <Main>
-                    <GeneralInfo/>
-                <OrderBook/>
+              <GeneralInfo/>
+              <OrderBook/>
               <News/>
             </Main>
           </Div>

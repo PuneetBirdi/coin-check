@@ -8,12 +8,7 @@ const OrderBook = () => {
   const liveDataContext = useContext(LiveDataContext);
   //Destructure data and functions from context
   const {
-    tickerData:{price},
-    isConnected,
-    socketError,
-    connectToSocket,
     marketDepth,
-    level2Update
   } = liveDataContext;
 
   let { bids, asks, midPrice } = marketDepth;
@@ -25,12 +20,13 @@ const OrderBook = () => {
         <Fragment>
           <OrderContainer>
             <table style={{ width: "100%", borderSpacing: "0" }}>
-              {asks.map((bid) => {
+              {asks.map((ask) => {
                 return (
                   <tr
                     style={{
                       backgroundColor: "rgba(234, 0, 0, 0.30)",
                     }}
+                    key={ask.price}
                   >
                     <td
                       style={{
@@ -42,7 +38,7 @@ const OrderBook = () => {
                         width: "50%"
                       }}
                     >
-                      {formatMoney(bid.price)}
+                      {formatMoney(ask.price)}
                     </td>
                     <td
                       style={{
@@ -53,7 +49,7 @@ const OrderBook = () => {
                         textAlign: "left",
                       }}
                     >
-                      {roundDecimals(bid.quantity, 6)}
+                      {roundDecimals(ask.quantity, 6)}
                     </td>
                   </tr>
                 );
@@ -71,6 +67,7 @@ const OrderBook = () => {
                     style={{
                       backgroundColor: "lightgreen",
                     }}
+                    key={bid.price}
                   >
                     <td
                       style={{
@@ -91,7 +88,6 @@ const OrderBook = () => {
                         borderRight: "3px solid green",
                         paddingLeft: "0.5rem",
                         textAlign: "left",
-                        fontWeight: "500",
                       }}
                     >
                       {roundDecimals(bid.quantity, 6)}

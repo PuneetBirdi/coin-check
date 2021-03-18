@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from 'react'
+import React, {useEffect, useContext, useRef} from 'react'
 import DataContext from "../context/data/dataContext";
 import { createChart } from "lightweight-charts";
 import { formatMoney, roundDecimals } from '../utils/formatData'
@@ -8,12 +8,9 @@ const LineChart = () => {
 const ref = useRef();
 const legendRef = useRef();
 
-//State for managing time range
-const [range, setRange] = useState(null)
-
 //Use context to pull historical data and destructure
 const dataContext = useContext(DataContext);
-const { historicalData: {candles, volume}, loading, error, getHistorical } = dataContext;
+const { historicalData: {candles, volume} } = dataContext;
 
 //Generate the chart on render.
 useEffect(() => {

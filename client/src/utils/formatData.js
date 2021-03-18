@@ -1,4 +1,3 @@
-import moment from 'moment'
 
 export const roundDecimals = (value, decimals) =>{
     const number = parseFloat(value)

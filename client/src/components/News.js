@@ -16,7 +16,7 @@ const News = () => {
           {
               news ?
               news.map((article) =>{
-                 return <NewsArticle article={article}/>
+                 return <NewsArticle key={article.description} article={article}/>
               }) 
               :
               <p>Loading</p>
@@ -36,6 +36,8 @@ const NewsStyled = styled.section`
   grid-column-end: 3;
   display: flex;
   flex-direction: column;
+
+  overflow-x: hidden;
 `;
 
 const Header = styled.div`
