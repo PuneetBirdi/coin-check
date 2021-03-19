@@ -31,42 +31,41 @@ export const formatChartData = (array) =>{
         response.volume.push(volumePoint)
         response.candles.push(candle)
     })
-
     return response;
 }
 
-export const formatMarketDepth = (snapshot, update) =>{
-  //Initialize array for final orderbook to be pushed into.
-  const asks = [];
-  const bids = [];
+// export const formatMarketDepth = (snapshot, update) =>{
+//   //Initialize array for final orderbook to be pushed into.
+//   const asks = [];
+//   const bids = [];
 
-  //Loop through the array and create elements to show the total quantity, by accumulating all of the quantities of prices
-  let askAccumulator = 0;
-  let bidAccumulator = 0;
+//   //Loop through the array and create elements to show the total quantity, by accumulating all of the quantities of prices
+//   let askAccumulator = 0;
+//   let bidAccumulator = 0;
 
-  for (let i = 0; i < 100; i++) {
-    bidAccumulator += parseFloat(snapshot.bids[i][1]);
-    let numBid = [parseFloat(snapshot.bids[i][0]), bidAccumulator,];
-    bids.push(numBid);
+//   for (let i = 0; i < 100; i++) {
+//     bidAccumulator += parseFloat(snapshot.bids[i][1]);
+//     let numBid = [parseFloat(snapshot.bids[i][0]), bidAccumulator,];
+//     bids.push(numBid);
 
-    askAccumulator += parseFloat(snapshot.asks[i][1]);
-    let numAsk = [parseFloat(snapshot.asks[i][0]), askAccumulator];
-    asks.push(numAsk);
-  }
+//     askAccumulator += parseFloat(snapshot.asks[i][1]);
+//     let numAsk = [parseFloat(snapshot.asks[i][0]), askAccumulator];
+//     asks.push(numAsk);
+//   }
 
-  //calculate mid-price
-  const midPrice =
-    (parseFloat(snapshot.bids[0][0]) + parseFloat(snapshot.asks[0][0])) / 2;
+//   //calculate mid-price
+//   const midPrice =
+//     (parseFloat(snapshot.bids[0][0]) + parseFloat(snapshot.asks[0][0])) / 2;
 
-  //Package response
-  const marketDepth = {
-    bids,
-    asks,
-    midPrice,
-  };
+//   //Package response
+//   const marketDepth = {
+//     bids,
+//     asks,
+//     midPrice,
+//   };
 
-  return marketDepth;
-}
+//   return marketDepth;
+// }
 
 export const calcPercentageChange = (initial, current) =>{
     const factor = current/initial;
@@ -78,4 +77,38 @@ export const calcPercentageChange = (initial, current) =>{
     return change
 }
 
+//turn strings provided from order book into numbers
+export const formatOrderBook = (book) =>{
+  const asks = []
+  const bids = []
 
+  let askAccumulator = 0;
+  let bidAccumulator = 0;
+
+  for (let i = 0; i < 50; i++) {
+    const currentAsk = book.asks[i];
+    askAccumulator += parseFloat(currentAsk[1])
+    const askItem = [
+      parseFloat(currentAsk[0]),
+      askAccumulator,
+      currentAsk[2]
+    ]
+    asks.push(askItem);
+
+    const currentBid = book.bids[i];
+    bidAccumulator += parseFloat(currentBid[1]);
+    const bidItem = [
+      parseFloat(currentBid[0]),
+      bidAccumulator,
+      currentBid[2]
+    ]
+    bids.push(bidItem)
+  }
+
+  const orderbook = {
+    asks,
+    bids
+  }
+
+  return orderbook
+}

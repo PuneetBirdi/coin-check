@@ -32,6 +32,7 @@ const DataState = (props) =>{
         error: null,
         loading: true,
         loadingNews: true,
+        orderBook: null
     }
 
     const [state, dispatch] = useReducer(DataReducer, initialState)

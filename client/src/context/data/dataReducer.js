@@ -2,6 +2,7 @@ import {
   GET_HISTORICAL_DATA,
   SET_LOADING,
   DATA_ERROR,
+  GET_ORDER_BOOK,
   GET_NEWS,
 } from "../types";
 

@@ -1,7 +1,7 @@
 import {
   HANDLE_TICKER_DATA,
-  HANDLE_LEVEL2_SNAPSHOT,
   SOCKET_ERROR,
+  GET_ORDER_BOOK,
   HANDLE_LEVEL2_UPDATE
 } from "../types";
 
@@ -13,11 +13,11 @@ export default (state, action) =>{
           tickerData: action.payload,
           isConnected: true,
         };
-      case HANDLE_LEVEL2_SNAPSHOT:
+      case GET_ORDER_BOOK:
         return {
           ...state,
-          marketDepth: action.payload,
-          isConnected: true,
+          orderBook: action.payload,
+          loading: false,
         };
       case HANDLE_LEVEL2_UPDATE:
         return {

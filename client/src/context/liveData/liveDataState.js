@@ -1,13 +1,15 @@
  import { useReducer } from 'react';
- import { calcPercentageChange, formatMarketDepth } from '../../utils/formatData';
+ import { calcPercentageChange, formatOrderBook } from '../../utils/formatData';
  import LiveDataContext from './liveDataContext';
  import LiveDataReducer from './liveDataReducer';
+ import axios from 'axios';
  import {
 
    HANDLE_TICKER_DATA,
    SET_CONNECTION_STATUS,
    HANDLE_LEVEL2_UPDATE,
    HANDLE_LEVEL2_SNAPSHOT,
+   GET_ORDER_BOOK
  } from "../types";
 
  //CONSTANTS
@@ -15,10 +17,10 @@ const SUBSCRIBE_MESSAGE = {
   type: "subscribe",
   channels: [
     { name: "ticker", product_ids: ["BTC-USD"] },
-    { name: "level2", product_ids: ["BTC-USD"] },
   ],
 };
 const WEBSOCKET_ADDRESS = "wss://ws-feed-public.sandbox.pro.coinbase.com";
+const COINBASE_REST_API = "https://api.pro.coinbase.com";
 
 const LiveDataState = (props) =>{
   const initialState = {
@@ -31,12 +33,14 @@ const LiveDataState = (props) =>{
     },
     isConnected: false,
     error: null,
+    orderBook: ""
   };
 
   const [state, dispatch] = useReducer(LiveDataReducer, initialState);
 
   //Connect and handle messages from the socket
   const connectToSocket = async () => {
+    getOrderBook();
     //Initiate socket
     const ws = new WebSocket(WEBSOCKET_ADDRESS);
 
@@ -66,11 +70,11 @@ const LiveDataState = (props) =>{
               payload: tickerData
             })
         }else if(response.type === 'snapshot'){
-          console.log(response)
-            dispatch({
-              type: HANDLE_LEVEL2_SNAPSHOT,
-              payload: await formatMarketDepth(response, null)
-            })
+          // console.log(response)
+          //   dispatch({
+          //     type: HANDLE_LEVEL2_SNAPSHOT,
+          //     payload: await formatMarketDepth(response, null)
+          //   })
         }else if(response.type === 'l2update'){
             dispatch({
               type: HANDLE_LEVEL2_UPDATE,
@@ -85,6 +89,20 @@ const LiveDataState = (props) =>{
     }
   }
 
+  const getOrderBook = async (product) => {
+    try {
+      const res = await axios.get(
+        `${COINBASE_REST_API}/products/BTC-USD/book?level=3`
+      );
+      dispatch({
+        type: GET_ORDER_BOOK,
+        payload: await formatOrderBook(res.data)
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //Set Loading
   const setConnectionStatus = () => {
     dispatch({ type: SET_CONNECTION_STATUS });
@@ -96,7 +114,7 @@ const LiveDataState = (props) =>{
             tickerData: state.tickerData,
             socketError: state.error,
             isConnected: state.isConnected,
-            marketDepth: state.marketDepth,
+            orderBook: state.orderBook,
             connectToSocket,
             }}
         >
