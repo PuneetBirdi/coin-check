@@ -85,7 +85,7 @@ export const formatOrderBook = (book) =>{
   let askAccumulator = 0;
   let bidAccumulator = 0;
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 1000; i++) {
     const currentAsk = book.asks[i];
     askAccumulator += parseFloat(currentAsk[1])
     const askItem = [

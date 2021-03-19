@@ -12,20 +12,19 @@ const OrderBook = () => {
   const options = {
     chart: {
         type: 'area',
-        zoomType: 'xy'
     },
     title: {
-        text: 'ETH-BTC Market Depth'
+        text: 'BTC-USD Market Depth'
     },
     xAxis: {
         minPadding: 0,
         maxPadding: 0,
         plotLines: [{
             color: '#888',
-            value: 0.1523,
+            value: 58500,
             width: 1,
             label: {
-                text: 'Actual price',
+                text: '58,500',
                 rotation: 90
             }
         }],
@@ -75,11 +74,11 @@ const OrderBook = () => {
     series: [{
         name: 'Bids',
         data: orderBook.bids,
-        color: '#03a7a8'
+        color: 'green'
     }, {
         name: 'Asks',
         data: orderBook.asks,
-        color: '#fc5857'
+        color: 'red'
     }]
 };
 
