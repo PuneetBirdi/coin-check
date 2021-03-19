@@ -51,6 +51,6 @@ const Header = styled.div`
 
 const ArticleContainer = styled.div`
     flex: 1;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
 `

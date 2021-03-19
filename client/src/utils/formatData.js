@@ -61,9 +61,7 @@ export const formatMarketDepth = (snapshot, update) =>{
   //Package response
   const marketDepth = {
     bids,
-    asks: asks.reverse(),
-    askVolume: askAccumulator,
-    bidVolume: bidAccumulator,
+    asks,
     midPrice,
   };
 

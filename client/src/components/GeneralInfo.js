@@ -78,7 +78,7 @@ const GeneralInfo = () => {
           </MainHeader>
         ) : (
           <MainHeader>
-            <PriceContainer>
+            <PriceContainer change={change_24h.points}>
               <div className="current-price">
                 <small>BTC - USD</small>
                 <h2>{formatMoney(price)}</h2>
@@ -177,7 +177,7 @@ const PriceContainer = styled.div`
   display: flex;
 
   .current-price {
-    margin-right: 1.0rem;
+    margin-right: 1rem;
     > small {
       padding: 0;
       margin: 0;
@@ -204,7 +204,7 @@ const PriceContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: green;
+    color: ${(props) => (props.change > 0 ? "green" : "red")};
 
     > small {
       padding: 0;
@@ -219,14 +219,14 @@ const PriceContainer = styled.div`
     > h2 {
       padding: 0;
       margin: 0;
-      font-size: 1.0rem;
-      font-weight: 900;
+      font-size: 1rem;
+      font-weight: 800;
       text-align: right;
     }
 
     > .timestamp {
+      color: ${(props) => (props.change > 0 ? "green" : "red")};
       font-size: 0.5rem;
-      color: green;
       font-weight: 600;
       font-size: 0.75rem;
     }
