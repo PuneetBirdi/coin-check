@@ -8,7 +8,7 @@ const OrderBook = () => {
   //Getting data from context and destructure it.
   const liveDataContext = useContext(LiveDataContext);
   const { orderBook } = liveDataContext;
-
+  const { midPrice } = orderBook
   const options = {
     chart: {
         type: 'area',
@@ -21,10 +21,10 @@ const OrderBook = () => {
         maxPadding: 0,
         plotLines: [{
             color: '#888',
-            value: 58500,
+            value: midPrice,
             width: 1,
             label: {
-                text: '58,500',
+                text: midPrice,
                 rotation: 90
             }
         }],
@@ -81,7 +81,6 @@ const OrderBook = () => {
         color: 'red'
     }]
 };
-
   return (
     <OrderBookStyled>
       <Header>Market Depth - Under Cosntruction</Header>
@@ -120,6 +119,7 @@ const Header = styled.h2`
 const ChartContainer = styled.div`
   display: flex;
   height: 100%;
+  width: 100%;
 
   > .mid-price{
     display: flex;

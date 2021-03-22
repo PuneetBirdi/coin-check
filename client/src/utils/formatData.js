@@ -105,9 +105,11 @@ export const formatOrderBook = (book) =>{
     bids.push(bidItem)
   }
 
+  const midPrice = (asks[0][0] + bids[0][0]) / 2
   const orderbook = {
     asks,
-    bids
+    bids,
+    midPrice
   }
 
   return orderbook
