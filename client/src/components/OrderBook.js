@@ -1,4 +1,4 @@
-import React, {useContext, Fragment} from 'react'
+import React, {useContext, useEffect, useRef} from 'react'
 import { formatMoney } from '../utils/formatData';
 import styled from 'styled-components'
 import Highcharts from "highcharts";
@@ -6,14 +6,22 @@ import HighchartsReact from "highcharts-react-official";
 import LiveDataContext from "../context/liveData/liveDataContext";
 
 const OrderBook = () => {
+  const chartComponent = useRef();
   //Getting data from context and destructure it.
   const liveDataContext = useContext(LiveDataContext);
   const { orderBook } = liveDataContext;
   const { midPrice } = orderBook
+
+  useEffect(() => {
+    const container = chartComponent.current.container.current;
+    container.style.height = '100%';
+    container.style.width = '100%';
+
+    chartComponent.current.chart.reflow()
+  }, [])
   const options = {
     chart: {
       type: "area",
-      height: 300
     },
     title: {
       text: 'Market Depth',
@@ -98,7 +106,7 @@ const OrderBook = () => {
               orderBook === null ? 
               <p>Loading</p> 
               :
-              <HighchartsReact highcharts={Highcharts} options={options} />
+              <HighchartsReact ref={chartComponent} highcharts={Highcharts} options={options} />
           }
     </OrderBookStyled>
   );
@@ -113,6 +121,8 @@ const OrderBookStyled = styled.section`
   grid-column-end: 3;
   display: flex;
   flex-direction: column;
+
+  max-height: 250px;
 `;
 
 const Header = styled.h2`
