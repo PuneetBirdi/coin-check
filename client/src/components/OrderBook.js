@@ -9,7 +9,7 @@ const OrderBook = () => {
   const chartComponent = useRef();
   //Getting data from context and destructure it.
   const liveDataContext = useContext(LiveDataContext);
-  const { orderBook } = liveDataContext;
+  const { orderBookLoading, orderBook, getOrderBook } = liveDataContext;
   const { midPrice } = orderBook
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const OrderBook = () => {
       type: "area",
     },
     title: {
-      text: 'Market Depth',
+      text: null,
     },
     xAxis: {
       minPadding: 0,
@@ -82,6 +82,12 @@ const OrderBook = () => {
         step: "center",
       },
     },
+    events:{
+        load(){
+            const chart = this;
+            chart.showLoading('Loading...');
+        }
+    },
     tooltip: {
       headerFormat:
         '<span style="font-size=10px;">Price: {point.key}</span><br/>',
@@ -100,10 +106,30 @@ const OrderBook = () => {
       },
     ],
   };
+
+  const refreshChart = async (e) =>{
+      await getOrderBook();
+      chartComponent.current.chart.reflow();
+  }
   return (
     <OrderBookStyled>
+        <Header>
+            <h2>
+                Market Depth
+            </h2>
+            <div className="">
+                <button onClick={(e) => refreshChart()} disabled={orderBookLoading}>
+                    {
+                        orderBookLoading ? 
+                        <p>Loading...</p>
+                        :
+                        <p>Refresh</p>
+                    }
+                </button>
+            </div>
+        </Header>
           {
-              orderBook === null ? 
+              orderBook === null? 
               <p>Loading</p> 
               :
               <HighchartsReact ref={chartComponent} highcharts={Highcharts} options={options} />
@@ -125,13 +151,23 @@ const OrderBookStyled = styled.section`
   max-height: 250px;
 `;
 
-const Header = styled.h2`
-  padding: 0;
-  margin: 0;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  font-size: 1.0rem;
-  text-align: center;
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin-bottom: 0.25rem;
+
+  >h2{
+      font-size: 1.0rem;
+      margin: 0;
+  }
+  >div{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: center;
+  }
 `
 
 const ChartContainer = styled.div`

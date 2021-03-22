@@ -8,7 +8,7 @@
    HANDLE_TICKER_DATA,
    SET_CONNECTION_STATUS,
    HANDLE_LEVEL2_UPDATE,
-   HANDLE_LEVEL2_SNAPSHOT,
+   SET_ORDER_BOOK_LOADING,
    GET_ORDER_BOOK
  } from "../types";
 
@@ -31,6 +31,7 @@ const LiveDataState = (props) =>{
       asks: null,
       midPrice: null,
     },
+    orderBookLoading: true,
     isConnected: false,
     error: null,
     orderBook: ""
@@ -90,6 +91,7 @@ const LiveDataState = (props) =>{
   }
 
   const getOrderBook = async (product) => {
+    setOrderBookLoading();
     try {
       const res = await axios.get(
         `${COINBASE_REST_API}/products/BTC-USD/book?level=3`
@@ -103,10 +105,16 @@ const LiveDataState = (props) =>{
     }
   };
 
-  //Set Loading
+  //Set connection status
   const setConnectionStatus = () => {
     dispatch({ type: SET_CONNECTION_STATUS });
   };
+
+  const setOrderBookLoading = () =>{
+    dispatch({
+      type: SET_ORDER_BOOK_LOADING
+    })
+  }
 
     return (
         <LiveDataContext.Provider
@@ -115,7 +123,9 @@ const LiveDataState = (props) =>{
             socketError: state.error,
             isConnected: state.isConnected,
             orderBook: state.orderBook,
+            orderBookLoading: state.orderBookLoading,
             connectToSocket,
+            getOrderBook
             }}
         >
             {props.children}

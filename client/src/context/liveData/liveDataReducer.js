@@ -2,7 +2,8 @@ import {
   HANDLE_TICKER_DATA,
   SOCKET_ERROR,
   GET_ORDER_BOOK,
-  HANDLE_LEVEL2_UPDATE
+  HANDLE_LEVEL2_UPDATE,
+  SET_ORDER_BOOK_LOADING
 } from "../types";
 
 export default (state, action) =>{
@@ -17,13 +18,18 @@ export default (state, action) =>{
         return {
           ...state,
           orderBook: action.payload,
-          loading: false,
+          orderBookLoading: false
         };
       case HANDLE_LEVEL2_UPDATE:
         return {
           ...state,
           level2Update: action.payload.changes,
           isConnected: true,
+        };
+      case SET_ORDER_BOOK_LOADING:
+        return {
+          ...state,
+          orderBookLoading: true,
         };
       case SOCKET_ERROR:
         return {
