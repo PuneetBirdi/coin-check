@@ -48,7 +48,7 @@ useEffect(() => {
     wickVisible: true,
     borderUpColor: "rgba(63, 191, 63, 1)",
     borderDownColor: "rgba(255, 20, 20, 1)",
-    wickUpColor: "gba(63, 191, 63, 1)",
+    wickUpColor: "rgba(63, 191, 63, 1)",
     wickDownColor: "rgba(255, 20, 20, 1)",
   });
 
