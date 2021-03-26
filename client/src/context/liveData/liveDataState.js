@@ -96,6 +96,7 @@ const LiveDataState = (props) =>{
       const res = await axios.get(
         `${COINBASE_REST_API}/products/BTC-USD/book?level=3`
       );
+      console.log(res)
       dispatch({
         type: GET_ORDER_BOOK,
         payload: await formatOrderBook(res.data)

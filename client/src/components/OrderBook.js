@@ -36,7 +36,7 @@ const OrderBook = () => {
           width: 1,
           label: {
             text: formatMoney(midPrice),
-            rotation: 90,
+            rotation: 0,
           },
         },
       ],
@@ -155,7 +155,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-content: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.25;
 
   >h2{
       font-size: 1.0rem;
